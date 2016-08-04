@@ -81,4 +81,26 @@ public class AdministratorPageLoader implements IPageLoader{
 			subjects.put(subject.getId(), subject);
 		}
 	}
+	
+	/*private void setMarksAndSubjects(){
+		
+		subjects = new HashMap<>();
+		for(ExtendedApplication application : unreviewedApplications){
+			List<Double> appMarks = new ArrayList<>();
+			List<String> appSubjects = new ArrayList<>();
+			final IApplicantMarkDao APPLICANT_MARK_DAO = daoFactory.getApplicantMarkDao();
+			final IApplicationMarkDao APPLICATION_MARK_DAO = daoFactory.getApplicationMarkDao();
+			final ISubjectDao SUBJECT_DAO = daoFactory.getSubjectDao();
+			
+			for(ApplicationMark applicationMarks : APPLICATION_MARK_DAO.
+					findByApplicationId(application.getApplicationId())){
+				ApplicantMark currentMark = APPLICANT_MARK_DAO.findById(applicationMarks.getMarkId());
+				appMarks.add(currentMark.getMark());
+				appSubjects.add(SUBJECT_DAO.findById(currentMark.getSubjectId()).getName());
+			}
+			
+			marks.put(application.getApplicationId(), appMarks);
+			subjects.put(application.getApplicationId(), appSubjects);
+		}
+	}*/
 }

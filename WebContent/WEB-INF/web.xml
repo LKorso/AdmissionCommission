@@ -113,6 +113,15 @@
   	<url-pattern>/student</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+  	<servlet-name>newAdministrator</servlet-name>
+  	<jsp-file>/WEB-INF/jsp/newAdministrator.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>newAdministrator</servlet-name>
+  	<url-pattern>/newAdministrator</url-pattern>
+  </servlet-mapping>
+  
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

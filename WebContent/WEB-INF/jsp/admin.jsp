@@ -144,8 +144,8 @@
 	<div class="row">
 		<h3 class="col-xs-10">Here you can register a new administrator</h3>
 			<form action="Controller" method="POST">
-				<input type="hidden" name="command" value="amin"/>
-				<button class="col-xs-2">New Administrator</button>
+				<input type="hidden" name="command" value="admin"/>
+				<button class="col-xs-2" name="newAdmininstrator" value="newAdmininstrator">New Administrator</button>
 			</form>
 	</div>
 	</div>

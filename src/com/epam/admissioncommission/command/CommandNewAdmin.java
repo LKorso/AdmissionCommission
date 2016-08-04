@@ -6,12 +6,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CommandNewAdmin implements ICommand {
+import com.epam.admissioncommission.logic.PageConfigurator;
+import com.epam.admissioncommission.logic.UserRegistration;
 
+public class CommandNewAdmin implements ICommand {
+	private String page;
+	
 	@Override
 	public String render(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		return null;
+		UserRegistration registration = new UserRegistration(request);
+		registration.register();
+		request.setAttribute(ATRIBUTE_REDIRECT, true);
+		page = PageConfigurator.getConfigurator().getPage(PageConfigurator.ADMIN_PAGE);
+		return page;
 	}
-
 }

@@ -13,12 +13,12 @@ public class PageConfigurator {
 	public static final String APPLICANT_PAGE = "APPLICANT";
 	public static final String ERROR_PAGE = "ERROR";
 	public static final String FACULTY_PAGE = "FACULTY";
-	public static final String NEW_ADMIN_PAGE = "NEWADMIN";
 	public static final String REGISTRATION_PAGE = "REGISTRATION";
 	public static final String STUDENT_PAGE = "STUDENT";
 	public static final String CHANGE_STUDENT_INFORMATION_PAGE = "CHANGE_STUDENT_INFORMATION";
 	public static final String CHANGE_APPLICANT_INFORMATION_PAGE = "CHANGE_APPLICANT_INFORMATION";
 	public static final String CHANGE_ADMINISTRATOR_INFORMATION_PAGE = "CHANGE_ADMINISTRATOR_INFORMATION";
+	public static final String NEW_ADMINISTRATOR_PAGE = "NEW_ADMINISTRATOR";
 	
 	private static final String RESOURCE_FILE = "pages.properties";
 	private Properties resource;
@@ -58,12 +58,12 @@ public class PageConfigurator {
 		pages.put("ERROR", "/error");
 		pages.put("FACULTY", "/faculty");
 		pages.put("LOGIN", "/login");
-		pages.put("NEWADMIN", "/newAdmin");
 		pages.put("REGISTRATION", "/registration");
 		pages.put("STUDENT", "/student");
 		pages.put("CHANGE_STUDENT_INFORMATION", "/changeStudentInformation");
 		pages.put("CHANGE_APPLICANT_INFORMATION", "/changeApplicantInformation");
 		pages.put("CHANGE_ADMINISTRATOR_INFORMATION", "/changeAdministratorInformation");
+		pages.put("NEW_ADMINISTRATOR", "/newAdministrator");
 		return pages.get(key);
 	}
 }

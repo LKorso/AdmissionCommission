@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.epam.admissioncommission.loader.AdministratorChangeInformationPageLoader;
 import com.epam.admissioncommission.loader.AdministratorPageLoader;
 import com.epam.admissioncommission.loader.IPageLoader;
+import com.epam.admissioncommission.loader.NewAdministratorPageLoader;
 import com.epam.admissioncommission.logic.ApplicationProcessor;
 import com.epam.admissioncommission.logic.PageConfigurator;
 
@@ -29,6 +30,10 @@ public class CommandAdmin implements ICommand {
 			processor.processApplication(request.getParameter("cancel"), "Rejected");
 			processor.addDescription(Integer.parseInt(request.getParameter("cancel")), request.getParameter("description"));
 			request.setAttribute(ATRIBUTE_REDIRECT, true);
+		} else if (request.getParameter("newAdmininstrator") != null){
+			IPageLoader pageLaoder = new NewAdministratorPageLoader(request, response);
+			pageLaoder.setAtributes();
+			return PageConfigurator.getConfigurator().getPage(PageConfigurator.NEW_ADMINISTRATOR_PAGE);
 		}
 		IPageLoader pageLoader = new AdministratorPageLoader(request, response);
 		pageLoader.setAtributes();

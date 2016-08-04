@@ -31,13 +31,16 @@ public class UserRegistration {
 		case "registration":
 			registerAplicant();
 			break;
+		case "newAdministrator":
+			registerAdministrator();
+			break;
 		default:
 			break;
 		}
 	}
 	
 	private void registerAdministrator(){
-		createUser("Administator");
+		createUser("Administrator");
 	}
 	
 	private void registerAplicant(){

@@ -24,7 +24,7 @@ public class ControllerHelper {
 	private static final String KEY_COMMAND_ERROR = "error";
 	private static final String KEY_COMMAND_FACULTY = "faculty";
 	private static final String KEY_COMMAND_LOGIN = "login";
-	private static final String KEY_COMMAND_NEW_ADMIN = "newadmin";
+	private static final String KEY_COMMAND_NEW_ADMIN = "newAdministrator";
 	private static final String KEY_COMMAND_REGISTRATION = "registration";
 	private static final String KEY_COMMAND_STUDENT = "student";
 	private static final String KEY_COMMAND_CHANGE_INFORMATION = "changeInformation";

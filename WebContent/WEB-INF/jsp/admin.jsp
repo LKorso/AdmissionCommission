@@ -60,6 +60,8 @@
 			        <button class="btn" data-toggle="collapse" data-target="#collapse${applications.getApplicationId()}">New Applicant - ${applications.getFaculty()}</button>
 			      </h4>
 			    </div>
+			    <form action="Controller" method="POST">
+					<input type="hidden" name="command" value="admin" />
 			    <div id="collapse${applications.getApplicationId()}" class="panel-collapse collapse">
 			      <div class="panel-body">
 			      	<div class="col-xs-6">
@@ -123,19 +125,17 @@
 			      		<div class="col-xs-12"><h3>Some descriptions:</h3></div>
 			      	</div>
 			      	<div class="row">
-			      		<textarea maxlength="500" rows="3" class="col-xs-8"></textarea>
+			      		<textarea maxlength="500" rows="3" class="col-xs-8" name="description" value=""></textarea>
 			      	</div>
 			      <div class="panel-footer">
-				      <form action="Controller" method="POST">
-						<input type="hidden" name="command" value="admin" />
 				      	<div class="row">
 				      		<button class="col-md-2" name="submit" value="${applications.getApplicationId()}">Submit</button>
 							<button class="col-md-2" name="cancel" value="${applications.getApplicationId()}">Cancel</button>
 				      	</div>
-				      </form>
 			      </div>
 			    </div>
 			  </div>
+			  </form>
 			</div>
 			</div>
 		</c:forEach>

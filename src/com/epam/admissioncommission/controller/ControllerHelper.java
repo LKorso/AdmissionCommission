@@ -9,6 +9,7 @@ import com.epam.admissioncommission.command.CommandApplicant;
 import com.epam.admissioncommission.command.CommandChangeInformation;
 import com.epam.admissioncommission.command.CommandError;
 import com.epam.admissioncommission.command.CommandFaculty;
+import com.epam.admissioncommission.command.CommandHeader;
 import com.epam.admissioncommission.command.CommandLogin;
 import com.epam.admissioncommission.command.CommandNewAdmin;
 import com.epam.admissioncommission.command.CommandRegistaration;
@@ -28,6 +29,7 @@ public class ControllerHelper {
 	private static final String KEY_COMMAND_REGISTRATION = "registration";
 	private static final String KEY_COMMAND_STUDENT = "student";
 	private static final String KEY_COMMAND_CHANGE_INFORMATION = "changeInformation";
+	private static final String KEY_COMMAND_HEADER = "header";
 	private static final String COMMAND_PARAMETER = "command";
 	
 	private ControllerHelper(){
@@ -40,6 +42,7 @@ public class ControllerHelper {
 		commands.put(KEY_COMMAND_REGISTRATION, new CommandRegistaration());
 		commands.put(KEY_COMMAND_STUDENT, new CommandStudent());
 		commands.put(KEY_COMMAND_CHANGE_INFORMATION, new CommandChangeInformation());
+		commands.put(KEY_COMMAND_HEADER, new CommandHeader());
 	}
 	
 	public ICommand getCommand(HttpServletRequest request){

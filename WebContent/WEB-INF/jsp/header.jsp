@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
+   	<form action="Controller" method="POST">
+    	<input type="hidden" name="command" value="header" />
         <nav class="navbar navbar-dark navbar-fixed-top" id="navbar">
             <!-- Collapse button-->
         <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#header">
@@ -17,10 +18,10 @@
                 </span>
                 <ul class="nav navbar-nav" id="navigation">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                        <button name="home" value=""><a class="nav-link">Home</a></button>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Log out</a>
+                        <button name="log_out" value=""><a class="nav-link">Log out</a></button>
                     </li>
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</a>
@@ -36,3 +37,4 @@
 
         </div>
         </nav>
+	</form>

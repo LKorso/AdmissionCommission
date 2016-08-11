@@ -27,6 +27,7 @@ public class CommandLogin implements ICommand {
 	private static final String ATRIBUTE_EMAIL = "email";
 	private static final String ATRIBUTE_PASSWORD = "password";
 	private static final String ATRIBUTE_USER = "user";
+	private static final String ATRIBUTE_USER_TYPE = "userType";
 
 	private static final String USER_TYPE_ADMINISTRATOR = "Administrator";
 	private static final String USER_TYPE_APPLICANT = "Applicant";
@@ -58,15 +59,15 @@ public class CommandLogin implements ICommand {
 		switch (identifyUser(currentUser)) {
 		case USER_TYPE_ADMINISTRATOR:
 			renderAdminPage(request, response);
-			request.getSession().setAttribute("userType", USER_TYPE_ADMINISTRATOR);
+			request.getSession().setAttribute(ATRIBUTE_USER_TYPE, USER_TYPE_ADMINISTRATOR);
 			break;
 		case USER_TYPE_APPLICANT:
 			renderApplicantPage(request, response);
-			request.getSession().setAttribute("userType", USER_TYPE_APPLICANT);
+			request.getSession().setAttribute(ATRIBUTE_USER_TYPE, USER_TYPE_APPLICANT);
 			break;
 		case USER_TYPE_STUDENT:
 			renderStudentPage(request, response);
-			request.getSession().setAttribute("userType", USER_TYPE_STUDENT);
+			request.getSession().setAttribute(ATRIBUTE_USER_TYPE, USER_TYPE_STUDENT);
 			break;
 		default:
 			page = PageConfigurator.getConfigurator().getPage(PageConfigurator.ERROR_PAGE);

@@ -24,7 +24,7 @@
 </head>
 <body>
     <header class="main-head" style="background-image: url(img/Golovnijj_korpus_KPI.jpg);">
-        <jsp:include page="header.jsp"/>
+        <%@include file="header.jsp" %>
 
         <div class="container header_text">
             <h1>Admission commission</h1>

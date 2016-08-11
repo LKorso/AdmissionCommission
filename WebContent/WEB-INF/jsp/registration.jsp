@@ -6,20 +6,32 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-
-	<script src="js/jquery-1.11.3.js"></script>
-	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<title>Registration</title>
+	
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/fonts.css">
+	
 </head>
 <header>
+	<%@include file="header.jsp" %>
+		
 	<div class="container">
 		<div class="row">
 			<h3>Registration</h3>
 		</div>
 	</div>
 </header>
-<body>
+<body class="body">
 	<div class="container">
 		<form action="Controller" method="POST">
 			<input type="hidden" name="command" value="registration" />
@@ -95,5 +107,20 @@
 			</div>
 		</form>
 	</div>
+	
+	<!-- SCRIPTS -->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/tether.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+	
 </body>
 </html>

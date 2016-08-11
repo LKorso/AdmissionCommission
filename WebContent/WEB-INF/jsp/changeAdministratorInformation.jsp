@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>Material Design Bootstrap</title>
+    <title>Change information</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
@@ -19,16 +19,22 @@
 
     <!-- Material Design Bootstrap -->
     <link href="css/mdb.min.css" rel="stylesheet">
-	<title>Applicant page</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/fonts.css">
+    
 </head>
 <header>
+	<%@include file="header.jsp" %>
+	
 	<div class="container">
 		<div class="row">
 			<h3>Changing Information</h3>
 		</div>
 	</div>
 </header>
-<body>
+<body class="body">
 	<form action="Controller" method="POST">
 		<input type="hidden" name="command" value="changeInformation" />
 		<div class="container">

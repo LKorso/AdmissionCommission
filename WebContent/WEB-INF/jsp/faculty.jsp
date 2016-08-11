@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>Material Design Bootstrap</title>
+    <title>Faculty</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
@@ -21,12 +21,15 @@
     <!-- Material Design Bootstrap -->
     <link href="css/mdb.min.css" rel="stylesheet">
 
-    <!-- Your custom styles (optional) -->
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/fonts.css">
 
 </head>
-
-<body>
+<header>
+	<%@include file="header.jsp" %>
+</header>
+<body class="body">
 	<div class="container">
 		<form action="Controller" method="POST">
 			<input type="hidden" name="command" value="faculty" />

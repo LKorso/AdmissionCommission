@@ -68,7 +68,8 @@ public class FacultyPageLoader implements IPageLoader {
 	
 	private boolean whetherntEnoughPoints(){
 		for(FacultySubject subject : facultySubjects){
-			if(marks.get(subject.getSubjectId()).getMark() < subject.getMinMark()){
+			if((marks.get(subject.getSubjectId()) != null) 
+					&& (marks.get(subject.getSubjectId()).getMark() < subject.getMinMark())){
 				return true;
 			}
 		}

@@ -83,24 +83,24 @@
 				<div class="card-header danger-color-dark white-text">
 					No correct marks
 				</div>
-				<c:if test="${missing_marks}missing_marks">
-				<div class="card-block">
-					<h4 class="card-title">Unfortunately you don't have all necessary marks!</h4>
-					<p class="card-text">You can add the necessary assessment to your profile unless you specify them during the registration.</p>
-					<button class="btn btn-danger-outline waves-effect" name="modal_button" value="add_mark">Add marks</button>
-					<button class="btn btn-danger-outline waves-effect" name="modal_button" value="to_profile">Back to profile</button>
-				</div>
-			</c:if>
-			<c:if test="${low_rating}">
-			<div class="card-block">
-				<h4 class="card-title">Unfortunately your rating is not enough!</h4>
-				<p class="card-text">You can go to your profile and try to join the other faculty.</p>
-				<button class="btn btn-danger-outline waves-effect" name="modal_button" value="to_profile">Back to profile</button>
+				<c:if test="${(missing_marks && !low_rating)}">
+					<div class="card-block">
+						<h4 class="card-title">Unfortunately you don't have all necessary marks!</h4>
+						<p class="card-text">You can add the necessary assessment to your profile unless you specify them during the registration.</p>
+						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="add_mark">Add marks</button>
+						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="to_profile">Back to profile</button>
+					</div>
+				</c:if>
+				<c:if test="${low_rating}">
+					<div class="card-block">
+						<h4 class="card-title">Unfortunately your rating is not enough!</h4>
+						<p class="card-text">You can go to your profile and try to join the other faculty.</p>
+						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="to_profile">Back to profile</button>
+					</div>
+				</c:if>
 			</div>
-		</c:if>
+		</div> 
 	</div>
-</div> 
-</div>
 </div>
 </form>
 

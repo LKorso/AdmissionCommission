@@ -32,13 +32,13 @@ public class FacultyPageLoader implements IPageLoader {
 	
 	private static final String ATRIBUTE_FACULTY = "faculty";
 	private static final String ATRIBUTE_MISSING_MARKS = "missing_marks";
-	private static final String ATRIBUTE_SUBJECTS = "subjects";
+	private static final String ATRIBUTE_SUBJECTS = "faculty_subjects";
 	private static final String ATRIBUTE_CURRENT_MARKS = "current_marks";
 	private static final String ATRIBUTE_CERTIFICATE = "certificate";
 	private static final String ATRIBUTE_LOW_RATING = "low_rating";
 	private static final String ATRIBUTE_MIN_RATING = "min_marks";
 	
-	private static int certificetId;
+	private static int certificateId;
 	
 	public FacultyPageLoader(HttpServletRequest request, HttpServletResponse response){
 		this.currentUser = (User) request.getSession().getAttribute("user");
@@ -49,7 +49,7 @@ public class FacultyPageLoader implements IPageLoader {
 		faculty = loadFaculty();
 		facultySubjects.addAll(loadFacultySubjects());
 		applicantMarks.addAll((List<ApplicantMark>) session.getAttribute("marks"));
-		certificetId = daoFactory.getSubjectDao().findByName("Certificate").getId();
+		certificateId = daoFactory.getSubjectDao().findByName("Certificate").getId();
 		certificate = loadCertificate();
 	}
 	
@@ -111,6 +111,6 @@ public class FacultyPageLoader implements IPageLoader {
 	}
 	
 	private ApplicantMark loadCertificate(){
-		return applicantMarks.stream().filter(mark -> mark.getSubjectId() == certificetId).findFirst().get();
+		return applicantMarks.stream().filter(mark -> mark.getSubjectId() == certificateId).findFirst().get();
 	}
 }

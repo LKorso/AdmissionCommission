@@ -41,7 +41,7 @@
 			</div>
 			<h2>Your marks:</h2>
 			<div class="row">
-				<c:forEach var="subject" items="${subjects}">
+				<c:forEach var="subject" items="${faculty_subjects}">
 				<div class="col-xs-3">
 					<c:if test="${current_marks.get(subject.getId()).getMark() == null}">
 					<blockquote class="blockquote  bq-danger">

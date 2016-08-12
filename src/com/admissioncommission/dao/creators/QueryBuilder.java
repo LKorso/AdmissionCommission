@@ -55,11 +55,11 @@ public class QueryBuilder {
 		Set<String> keys = changes.keySet();
 		
 		for(String key : keys){
-			add—hanges(key, changes.get(key));
+			addChanges(key, changes.get(key));
 		}
 	}
 	
-	public void add—hanges(String fieldName, String value){
+	public void addChanges(String fieldName, String value){
 		if(!isFirstChange){
 			selectQuery.append(", ");
 		} else {

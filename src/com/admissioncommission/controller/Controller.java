@@ -19,7 +19,8 @@ public class Controller extends HttpServlet {
 
     protected void doRequest(HttpServletRequest request, HttpServletResponse response) {
     	String page = null;
-    	
+
+		System.out.println(request.getRequestURI());
     	try{
     		ICommand command = ControllerHelper.getHelper().getCommand(request);
     		page = command.render(request, response);

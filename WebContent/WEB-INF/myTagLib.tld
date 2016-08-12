@@ -11,7 +11,7 @@
 	
 	<tag>
 		<name>customselect</name>
-		<tag-class>com.epam.admissioncommission.tag.CustomSelectTag</tag-class>
+		<tag-class>com.admissioncommission.tag.CustomSelectTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>values</name>

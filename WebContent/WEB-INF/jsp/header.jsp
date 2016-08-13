@@ -17,13 +17,13 @@
                 </span>
                 <ul class="nav navbar-nav" id="navigation">
                     <li class="nav-item active">
-                        <button name="home" value=""><a class="nav-link">${content.getString("header_home")}</a></button>
+                        <button name="home" value=""><a class="nav-link">${content.getString("header.home")}</a></button>
                     </li>
                     <li class="nav-item active">
-                        <button name="log_out" value=""><a class="nav-link">${content.getString("header_log_out")}</a></button>
+                        <button name="log_out" value=""><a class="nav-link">${content.getString("header.log_out")}</a></button>
                     </li>
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${content.getString("header_language")}</a>
+                        <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${content.getString("header.language")}</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <button class="dropdown-item" name="locale" value="en"><img src="img/eng-flag.svg" class="flag"/>English</button>
                             <button class="dropdown-item" name="locale" value="ru"><img src="img/ru-flag.svg" class="flag"/>Русский</button>

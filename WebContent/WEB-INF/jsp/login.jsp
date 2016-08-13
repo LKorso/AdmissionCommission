@@ -19,21 +19,21 @@
 
     <link rel="stylesheet" href="css/fonts.css">
 
-    <title>${content.getString("login_ad_commission")}</title>
+    <title>${content.getString("login.ad_commission")}</title>
 </head>
 <body>
     <header class="main-head" style="background-image: url(img/Golovnijj_korpus_KPI.jpg);">
         <%@include file="header.jsp" %>
 
         <div class="container header_text">
-            <h1>${content.getString("login_ad_commission")}</h1>
-            <h2 id="top_line">${content.getString("login_ntuu")}</h2>
-            <h2>${content.getString("login_kpi")}</h2>
+            <h1>${content.getString("login.ad_commission")}</h1>
+            <h2 id="top_line">${content.getString("login.ntuu")}</h2>
+            <h2>${content.getString("login.kpi")}</h2>
         </div>
         
         <div class="container">
             <div class="row">
-                <button class="btn z-depth-2" id="log_btn" data-toggle="modal" data-target=".modal">${content.getString("login_log_in")}</button>
+                <button class="btn z-depth-2" id="log_btn" data-toggle="modal" data-target=".modal">${content.getString("login.log_in")}</button>
             </div>
         </div>
 
@@ -43,18 +43,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p>${content.getString("login_sign_in_description")}</p>
+                    <p>${content.getString("login.sign_in_description")}</p>
                     <form action="Controller" method="POST">
                         <input type="hidden" name="command" value="login" />
                         <div class="md-form">
                              <input type="email" name="email" value="" id="form9" class="form-control validate" name="email">
-                             <label for="form9" data-error="wrong" data-success="right">${content.getString("login_email")}:</label>
+                             <label for="form9" data-error="wrong" data-success="right">${content.getString("email")}:</label>
                         </div>
                         <div class="md-form">
                             <input type="password" name="password" value="" id="form10" class="form-control validate">
-                            <label for="form10" data-error="wrong" data-success="right">${content.getString("login_password")}:</label>
+                            <label for="form10" data-error="wrong" data-success="right">${content.getString("password")}:</label>
                         </div>   
-                        <button name="signIn" value="signIn" class="btn">${content.getString("login_sign_in")}</button>
+                        <button name="signIn" value="signIn" class="btn">${content.getString("login.sign_in")}</button>
                     </form>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="modal-body" id="sign_up_body">
                     <form action="Controller" method="POST">
                         <input type="hidden" name="command" value="login" />
-                        <button name="signUp" value="signUp" class="btn">${content.getString("login_sign_up")}</button>
+                        <button name="signUp" value="signUp" class="btn">${content.getString("login.sign_up")}</button>
                     </form>
                 </div>
             </div>

@@ -34,17 +34,17 @@
 
 			<h2>${faculty.getName()}</h2>
 			<div class="row">
-				<h4 class="col-xs-3">Number of positions: </h4> 
+				<h4 class="col-xs-3">${content.getString("faculty.positions")}: </h4> 
 				<p class="col-xs-2">${faculty.getStudentsNumber()}</p>
 			</div>
-			<h2>Your marks:</h2>
+			<h2>${content.getString("faculty.marks")}:</h2>
 			<div class="row">
 				<c:forEach var="subject" items="${faculty_subjects}">
 				<div class="col-xs-3">
 					<c:if test="${current_marks.get(subject.getId()).getMark() == null}">
 					<blockquote class="blockquote  bq-danger">
 						<p class="bq-title">${subject.getName()}</p>
-						<p>No mark</p>
+						<p>${content.getString("faculty.no_mark")}</p>
 					</blockquote>
 				</c:if>
 				<c:if test="${current_marks.get(subject.getId()).getMark() != null  && current_marks.get(subject.getId()).getMark() >= min_marks.get(subject.getId()).getMinMark()}">
@@ -63,14 +63,14 @@
 </c:forEach>
 <div class="col-xs-3">
 	<blockquote class="blockquote bq-success">
-		<p class="bq-title">Certificate</p>
+		<p class="bq-title">${content.getString("certificate")}</p>
 		<p>${certificate.getMark()}</p>
 	</blockquote>
 </div> 
 </div> 
 <c:if test="${!(missing_marks || low_rating)}">
 <div class="row">
-	<button class="btn btn-success btn-lg" name="applay" value="applay">Applay</button>
+	<button class="btn btn-success btn-lg" name="applay" value="applay">${content.getString("applay")}</button>
 </div>
 </c:if>
 <!--Modal-->
@@ -79,21 +79,27 @@
 		<div class="modal-content">
 			<div class="card">
 				<div class="card-header danger-color-dark white-text">
-					No correct marks
+					${content.getString("faculty.header")}
 				</div>
 				<c:if test="${(missing_marks && !low_rating)}">
 					<div class="card-block">
-						<h4 class="card-title">Unfortunately you don't have all necessary marks!</h4>
-						<p class="card-text">You can add the necessary assessment to your profile unless you specify them during the registration.</p>
-						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="add_mark">Add marks</button>
-						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="to_profile">Back to profile</button>
+						<h4 class="card-title">${content.getString("faculty.no_mark.hedear")}</h4>
+						<p class="card-text">${content.getString("faculty.no_mark.message")}</p>
+						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="add_mark">
+							${content.getString("faculty.no_mark.add_marks")}
+						</button>
+						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="to_profile">
+							${content.getString("faculty.to_profile")}
+						</button>
 					</div>
 				</c:if>
 				<c:if test="${low_rating}">
 					<div class="card-block">
-						<h4 class="card-title">Unfortunately your rating is not enough!</h4>
-						<p class="card-text">You can go to your profile and try to join the other faculty.</p>
-						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="to_profile">Back to profile</button>
+						<h4 class="card-title">${content.getString("faculty.low_rating.header")}</h4>
+						<p class="card-text">${content.getString("faculty.low_rating.message")}</p>
+						<button class="btn btn-danger-outline waves-effect" name="modal_button" value="to_profile">
+							${content.getString("faculty.to_profile")}
+						</button>
 					</div>
 				</c:if>
 			</div>
@@ -105,7 +111,7 @@
 <!--/Modal-->
 <c:if test="${missing_marks || low_rating}">
 <div class="row">
-	<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-1" >Applay</button>
+	<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-1" >${content.getString("applay")}</button>
 </div>
 </c:if>
 </div>

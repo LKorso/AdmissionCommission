@@ -77,14 +77,6 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>newAdmin</servlet-name>
-    <jsp-file>/WEB-INF/jsp/newAdmin.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>newAdmin</servlet-name>
-    <url-pattern>/newAdmin</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>registration</servlet-name>
     <jsp-file>/WEB-INF/jsp/registration.jsp</jsp-file>
   </servlet>
@@ -106,7 +98,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>newAdministrator</servlet-name>
-    <url-pattern>/newAdministrator</url-pattern>
+    <url-pattern>/newAdmin</url-pattern>
   </servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>

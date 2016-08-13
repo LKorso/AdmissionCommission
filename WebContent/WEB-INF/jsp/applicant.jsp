@@ -27,7 +27,7 @@
 		
 	<div class="container">
 		<div class="row">
-			<h3 class="col-xs-3">Applicant</h3>
+			<h3 class="col-xs-3">${content.getString("applicant.aplicant")}</h3>
 		</div>
 	</div>
 </header>
@@ -43,7 +43,7 @@
 				<p>${user.getFirstName()}</p>
 			</div>
 			<div class="col-xs-3">
-				<p>email:</p>
+				<p>${content.getString("email")}:</p>
 			</div>
 			<div class="col-xs-3">
 				<p>${user.getEmail()}</p>
@@ -54,7 +54,7 @@
 				<p>${user.getDateOfBirth()}</p>
 			</div>
 			<div class="col-xs-3">
-				<p>phone:</p>
+				<p>${content.getString("phone")}:</p>
 			</div>
 			<div class="col-xs-3">
 				<p>${user.getPhone()}</p>
@@ -65,16 +65,18 @@
 				<p>${user.getSex()}</p>
 			</div>
 				<div class="col-xs-6">
-					<button name="changeInformation" value="change">Change information</button>
+					<button name="changeInformation" value="change">
+						${content.getString("change_information")}
+					</button>
 				</div>
 		</div>
 		<div class="row">
-			<h3>Marks: </h3>
+			<h3>${content.getString("marks")}: </h3>
 		</div>
 		<table class="table">
 			<tr>
-				<th>Subject</th>
-				<th>mark</th>
+				<th>${content.getString("applicant.subject")}</th>
+				<th>${content.getString("applicant.mark")}</th>
 			</tr>
 				<c:forEach var="mark" items="${marks}">
 					<tr>
@@ -84,22 +86,24 @@
 				</c:forEach>
 		</table>
 		<div class="row">
-			<h3 class="col-xs-4">Submit a new application</h3>
+			<h3 class="col-xs-4">${content.getString("applicant.newapplication_description")}</h3>
 			<select class="mdb-select col-xs-4" name="faculty_id">
-    			<option value="" disabled selected>Choose faculty</option>
+    			<option value="" disabled selected>${content.getString("applicant.choose_faculty")}</option>
     			<c:forEach var="faculty" items="${faculties}">
     				<option value="${faculty.getId()}">${faculty.getName()}</option>
     			</c:forEach>
 			</select>
-			<button name="faculty" value="faculty" class="col-xs-2 btn btn-default">Choose</button>
+			<button name="faculty" value="faculty" class="col-xs-2 btn btn-default">
+				${content.getString("choose")}
+			</button>
 		</div>
 		<c:if test="${!applicationStatus}">
 			<div class="row">
-				<h3>Lists of applications: </h3>
+				<h3>${content.getString("applicant.applications_list")}: </h3>
 			</div>
 			<c:if test="${passed_applications != null}">
 				<div class="row">
-					<h4>Passed applications:</h4>
+					<h4>${content.getString("applicant.passed_applications")}:</h4>
 				</div>
 				<c:forEach var="applications" items="${passed_applications}">
 				<div class="row">
@@ -108,9 +112,9 @@
 				<table class="table">
 					<tr>
 						<th>#</th>
-						<th>Last name</th>
-						<th>Frist name</th>
-						<th>Average score</th>
+						<th>${content.getString("last_name")}</th>
+						<th>${content.getString("frist_name")}</th>
+						<th>${content.getString("applicant.average")}</th>
 					</tr>
 						<c:forEach var="application" items="${applications}">
 							<tr>
@@ -125,14 +129,16 @@
 			</c:if>
 			<c:if test="${unreviewed_applications != null}">
 				<div class="row">
-					<h4>Unreviewed applications: </h4>
+					<h4>${content.getString("applicant.unreviewed_applications")}: </h4>
 				</div>
 				<c:forEach var="unreviewed_application" items="${unreviewed_applications}">
 					<div class="row">
 						<div class="card">
 							<div class="card-block">
 			        			<h4 class="card-title">${unreviewed_application.getFaculty()}</h4>
-			        			<p class="card-text">Your application filed ${unreviewed_application.getFillingDate()}, is not yet considered.</p>
+			        			<p class="card-text">
+			        				${content.getString("applicant.un_app_description_one")}${unreviewed_application.getFillingDate()}${content.getString("applicant.un_app_description_two")}
+			        			</p>
 							</div>
 						</div>
 					</div>
@@ -140,15 +146,17 @@
 			</c:if>
 			<c:if test="${rejected_applications != null}">
 				<div class="row">
-					<h4>Rejected applications: </h4>
+					<h4>${content.getString("applicant.rejected_applications")}: </h4>
 				</div>
 				<c:forEach var="rejected_application" items="${rejected_applications}">
 					<div class="row">
 						<div class="card">
 							<div class="card-block">
 					       		<h4 class="card-title">${rejected_application.getFaculty()}</h4>
-					        	<p class="card-text">Unfortunately your application has been rejected for the following reasons: ${rejected_application.getDescription()}.</p>
-					        	<button name="remove" value="${rejected_application.getApplicationId()}" class="btn btn-primary">Remove</button>
+					        	<p class="card-text">${content.getString("applicant.rejected_description")}: ${rejected_application.getDescription()}.</p>
+					        	<button name="remove" value="${rejected_application.getApplicationId()}" class="btn btn-primary">
+					        		${content.getString("remove")}
+					        	</button>
 							</div>
 						</div>
 					</div>

@@ -27,7 +27,7 @@
 		
 	<div class="container">
 		<div class="row">
-			<h3 class="col-xs-3">Student Faculty: </h3>
+			<h3 class="col-xs-3">${content.getString("student")} ${content.getString("faculty")}: </h3>
 			<h3>${faculty}</h3>
 		</div>
 	</div>
@@ -42,7 +42,7 @@
 				<p>${user.getFirstName()}</p>
 			</div>
 			<div class="col-xs-3">
-				<p>email:</p>
+				<p>${content.getString("email")}:</p>
 			</div>
 			<div class="col-xs-3">
 				<p>${user.getEmail()}</p>
@@ -53,7 +53,7 @@
 				<p>${user.getDateOfBirth()}</p>
 			</div>
 			<div class="col-xs-3">
-				<p>phone:</p>
+				<p>${content.getString("phone")}:</p>
 			</div>
 			<div class="col-xs-3">
 				<p>${user.getPhone()}</p>
@@ -66,7 +66,7 @@
 			<form action="Controller" method="POST">
 				<input type="hidden" name="command" value="student" />
 				<div class="col-xs-6">
-					<button>Change information</button>
+					<button>${content.getString("change_information")}</button>
 				</div>
 			</form>
 		</div>

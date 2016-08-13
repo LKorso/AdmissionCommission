@@ -21,14 +21,14 @@
     <link rel="stylesheet" href="css/style.css">
 
     <link rel="stylesheet" href="css/fonts.css">
-   	
+
 </head>
 <header>
 	<%@include file="header.jsp" %>
 		
 	<div class="container">
 		<div class="row">
-			<h3>Administrator</h3>
+			<h3>${content.getString("admin.administrator")}</h3>
 		</div>
 	</div>
 </header>
@@ -37,23 +37,23 @@
 		<div class="row">
 			<div class="col-xs-3"><p>${user.getLastName()}</p></div>
 			<div class="col-xs-3"><p>${user.getFirstName()}</p></div>
-			<div class="col-xs-3"><p>email:</p></div>
+			<div class="col-xs-3"><p>${content.getString("email")}:</p></div>
 			<div class="col-xs-3"><p>${user.getEmail()}</p></div>
 		</div>
 		<div class="row">
 			<div class="col-xs-6"><p>${user.getDateOfBirth()}</p></div>
-			<div class="col-xs-3"><p>phone:</p></div>
+			<div class="col-xs-3"><p>${content.getString("phone")}:</p></div>
 			<div class="col-xs-3"><p>${user.getPhone()}</p></div>
 		</div>
 		<div class="row">
 			<div class="col-xs-6"><p>${user.getSex()}</p></div>
 			<form action="Controller" method="POST">
 				<input type="hidden" name="command" value="admin" />
-				<div class="col-xs-6"><button name="changeInformation" value="change">Change information</button></div>
+				<div class="col-xs-6"><button name="changeInformation" value="change">${content.getString("change_information")}</button></div>
 			</form>
 		</div>
 		<div class="row">
-			<h3>List of new applications</h3>
+			<h3>${content.getString("admin.applications_description")}</h3>
 		</div>
 		
 		<!--Start of collapse panel-->
@@ -62,7 +62,7 @@
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <button class="btn" data-toggle="collapse" data-target="#collapse${applications.getApplicationId()}">New Applicant - ${applications.getFaculty()}</button>
+			        <button class="btn" data-toggle="collapse" data-target="#collapse${applications.getApplicationId()}">${content.getString("admin.new_applicant")} - ${applications.getFaculty()}</button>
 			      </h4>
 			    </div>
 			    <div id="collapse${applications.getApplicationId()}" class="panel-collapse collapse">
@@ -70,37 +70,37 @@
 			      	<div class="col-xs-6">
 			      		<div class="row">
 			      			<p>
-			      				<span class="col-xs-3">Last name:</span>
+			      				<span class="col-xs-3">${content.getString("last_name")}:</span>
 			      				<span class="col-xs-3">${applications.getLastName()}</span>
 			      			</p>
 			      		</div>
 			      		<div class="row">
 			      			<p>
-			      				<span class="col-xs-3">First name</span>
+			      				<span class="col-xs-3">${content.getString("frist_name")}:</span>
 			      				<span class="col-xs-3">${applications.getFirstName()}</span>
 			      			</p>
 			      		</div>
 			      		<div class="row">
 				      		<p>
-				      			<span class="col-xs-3">Date of birth:</span>
+				      			<span class="col-xs-3">${content.getString("date_of_birth")}:</span>
 				      			<span class="col-xs-3">${applications.getDateOfBirth()}</span>
 				      		</p>
 			      		</div>
 			      		<div class="row">
 			      			<p>
-			      				<span class="col-xs-3">Sex:</span>
+			      				<span class="col-xs-3">${content.getString("sex")}:</span>
 			      				<span class="col-xs-3">${applications.getSex()}</span>
 			      			</p>
 			      		</div>
 			      		<div class="row">
 			      			<p>
-			      				<span class="col-xs-3">Email:</span>
+			      				<span class="col-xs-3">${content.getString("email")}:</span>
 			      				<span class="col-xs-3">${applications.getEmail()}</span>
 			      			</p>
 			      		</div>
 			      		<div class="row">
 			      			<p>
-			      				<span class="col-xs-3">Phone:</span>
+			      				<span class="col-xs-3">${content.getString("phone")}:</span>
 			      				<span class="col-xs-3">${applications.getPhone()}</span>
 			      			</p>
 			      		</div>
@@ -108,12 +108,12 @@
 			      	<div class="col-xs-6">
 			      		<div class="row">
 			      			<p>
-			      				<span class="col-xs-3">Faculty:</span>
+			      				<span class="col-xs-3">${content.getString("faculty")}:</span>
 			      				<span class="col-xs-3">${applications.getFaculty()}</span>
 			      			</p>
 			      		</div>
 			      		<div class="row">
-			      			<p class="col-xs-6">Marks:</p>
+			      			<p class="col-xs-6">${content.getString("marks")}:</p>
 			      		</div>
 			      		<c:forEach var="mark" items="${applicationMarks.get(applications.getApplicationId())}">
 			      			<div class="row">
@@ -125,7 +125,7 @@
 			      		</c:forEach>
 			      	</div>
 			      	<div class="row">
-			      		<div class="col-xs-12"><h3>Some descriptions:</h3></div>
+			      		<div class="col-xs-12"><h3>${content.getString("admin.application_descriptions")}:</h3></div>
 			      	</div>
 			      	<div class="row">
 			      		<textarea maxlength="500" rows="3" class="col-xs-8"></textarea>
@@ -134,8 +134,12 @@
 				      <form action="Controller" method="POST">
 						<input type="hidden" name="command" value="admin" />
 				      	<div class="row">
-				      		<button class="col-md-2" name="submit" value="${applications.getApplicationId()}">Submit</button>
-							<button class="col-md-2" name="cancel" value="${applications.getApplicationId()}">Cancel</button>
+				      		<button class="col-md-2" name="submit" value="${applications.getApplicationId()}">
+				      			${content.getString("submit")}
+				      		</button>
+							<button class="col-md-2" name="cancel" value="${applications.getApplicationId()}">
+								${content.getString("cancel")}
+							</button>
 				      	</div>
 				      </form>
 			      </div>
@@ -147,10 +151,12 @@
 	<!--End of collapse panel-->
 
 	<div class="row">
-		<h3 class="col-xs-10">Here you can register a new administrator</h3>
+		<h3 class="col-xs-10">${content.getString("admin.new_admin_description")}</h3>
 			<form action="Controller" method="POST">
 				<input type="hidden" name="command" value="admin"/>
-				<button class="col-xs-2" name="newAdmininstrator" value="newAdmininstrator">New Administrator</button>
+				<button class="col-xs-2" name="newAdmininstrator" value="newAdmininstrator">
+					${content.getString("admin.new_admin")}
+				</button>
 			</form>
 	</div>
 	</div>

@@ -29,7 +29,7 @@
 		
 	<div class="container">
 		<div class="row">
-			<h3>Changing Information</h3>
+			<h3>${content.getString("change.change_information")}</h3>
 		</div>
 	</div>
 </header>
@@ -38,46 +38,46 @@
 		<input type="hidden" name="command" value="changeInformation" />
 		<div class="container">
 			<div class="row">
-				<h4>Here you can change some information about yourself: </h4>
+				<h4>${content.getString("change.description")}: </h4>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Last name: </p>
+				<p class="col-xs-2">${content.getString("last_name")}: </p>
 				<input class="col-xs-2" type="text" name="last_name" value="${user.getLastName()}"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">First name: </p>
+				<p class="col-xs-2">${content.getString("frist_name")}: </p>
 				<input class="col-xs-2" type="text" name="first_name" value="${user.getFirstName()}"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Sex: </p>
+				<p class="col-xs-2">${content.getString("sex")}: </p>
 				<div class="col-xs-2">
 					<mytag:customselect values="${sex}" selectClass="form-control"
 						criterionForSelected="${user.getSex()}" selectName="sex"/>
 				</div>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Date of birth: </p>
-				<p class="col-xs-1">Year</p>
+				<p class="col-xs-2">${content.getString("date_of_birth")}: </p>
+				<p class="col-xs-1">${content.getString("year")}</p>
 				<input class="col-xs-1" type="text" name="year" value="${yearOfBirth}"></input>
-				<p class="col-xs-1">Month</p>
+				<p class="col-xs-1">${content.getString("month")}</p>
 				<div class="col-xs-2">
 					<mytag:customselect values="${months}" selectClass="form-control"
 						criterionForSelected="${monthOfBirth}" selectName="month"/>
 				</div>
-					<p class="col-xs-1" >Day</p>
+					<p class="col-xs-1" >${content.getString("day")}</p>
 					<input class="col-xs-2" type="text" name="day" value="${dayOfBirth}"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Email: </p>
+				<p class="col-xs-2">${content.getString("email")}: </p>
 				<input class="col-xs-2" type="text" name="email" value="${user.getEmail()}"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Phone: </p>
+				<p class="col-xs-2">${content.getString("phone")}: </p>
 				<input class="col-xs-2" type="text" name="phone" value="${user.getPhone()}"></input>
 			</div>
 			<input type="hidden" name="command" value="changeStudent" />
 			<div class="row">
-				<button name="submit" value="change">Submit</button>
+				<button name="submit" value="change">${content.getString("submit")}</button>
 			</div>
 		</div>
 	</form>

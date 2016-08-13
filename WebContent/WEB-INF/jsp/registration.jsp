@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Registration</title>
+	<title>${content.getString("registration")}</title>
 	
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
@@ -26,7 +26,7 @@
 		
 	<div class="container">
 		<div class="row">
-			<h3>Registration</h3>
+			<h3>${content.getString("registration")}</h3>
 		</div>
 	</div>
 </header>
@@ -35,51 +35,51 @@
 		<form action="Controller" method="POST">
 			<input type="hidden" name="command" value="registration" />
 			<div class="row">
-				<h4>Fill in all these fields</h4>
+				<h4>${content.getString("registration.description")}</h4>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Last name: </p>
+				<p class="col-xs-2">${content.getString("last_name")}: </p>
 				<input class="col-xs-2" type="text" name="lastName"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">First name: </p>
+				<p class="col-xs-2">${content.getString("frist_name")}: </p>
 				<input class="col-xs-2" type="text" name="firstName"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Sex: </p>
+				<p class="col-xs-2">${content.getString("sex")}: </p>
 				<div class="col-xs-2">
 					<mytag:customselect values="${sex}" selectClass="form-control" selectName="sex"/>
 				</div>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Date of birth: </p>
-				<p class="col-xs-1">Year</p>
+				<p class="col-xs-2">${content.getString("date_of_birth")}: </p>
+				<p class="col-xs-1">${content.getString("year")}</p>
 				<input class="col-xs-1" type="text" name="year"></input>
-				<p class="col-xs-1">Month</p>
+				<p class="col-xs-1">${content.getString("month")}</p>
 				<div class="col-xs-2">
 					<mytag:customselect values="${months}" selectClass="form-control" selectName="month"/>
 				</div>
-				<p class="col-xs-1">Day</p>
+				<p class="col-xs-1">${content.getString("day")}</p>
 				<input class="col-xs-2" type="text" name="day"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Phone: </p>
+				<p class="col-xs-2">${content.getString("phone")}: </p>
 				<input class="col-xs-2" type="text" name="phone"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Email: </p>
+				<p class="col-xs-2">${content.getString("email")}: </p>
 				<input class="col-xs-2" type="email" name="email"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Password: </p>
+				<p class="col-xs-2">${content.getString("password")}: </p>
 				<input class="col-xs-2" type="password" name="password_one"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">Repeat your password: </p>
+				<p class="col-xs-2">${content.getString("repeat_password")}: </p>
 				<input class="col-xs-2" type="password" name="password_two"></input>
 			</div>
 			<div class="row">
-				<h4>Marks: </h4>
+				<h4>${content.getString("marks")}: </h4>
 			</div>
 			<div class="row">
 				<div class="col-xs-4">
@@ -98,11 +98,11 @@
 				<input class="col-xs-4" type="text" name="mark_three"></input>
 			</div>
 			<div class="row">
-				<p class="col-xs-3">Certificate: </p>
+				<p class="col-xs-3">${content.getString("certificate")}: </p>
 				<input class="col-xs-4" type="text" name="certificate"></input>
 			</div>
 			<div class="row">
-				<button name="submit" class="btn btn-primary">Submit</button>
+				<button name="submit" class="btn btn-primary">${content.getString("submit")}</button>
 			</div>
 		</form>
 	</div>

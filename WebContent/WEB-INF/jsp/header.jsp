@@ -25,9 +25,9 @@
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${content.getString("header_language")}</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <a class="dropdown-item" href="#"><img src="img/eng-flag.svg" class="flag"/>English</a>
-                            <a class="dropdown-item" href="#"><img src="img/ru-flag.svg" class="flag"/>Русский</a>
-                            <a class="dropdown-item" href="#"><img src="img/ua-flag.svg" class="flag"/>Українська</a>
+                            <button class="dropdown-item" name="locale" value="en"><img src="img/eng-flag.svg" class="flag"/>English</button>
+                            <button class="dropdown-item" name="locale" value="ru"><img src="img/ru-flag.svg" class="flag"/>Русский</button>
+                            <button class="dropdown-item" name="locale" value="uk"><img src="img/ua-flag.svg" class="flag"/>Українська</button>
                         </div>
                     </li>
                 </ul>

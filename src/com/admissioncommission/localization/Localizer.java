@@ -12,12 +12,12 @@ public class Localizer {
 	
 	public static Locale getLocale(String country){
 		switch (country) {
-		case "English":
+		case "en":
 			return Locale.ENGLISH;
-		case "Russian":
+		case "ru":
 			return new Locale("ru", "RU");
-		case "Ukrainian":
-			return new Locale("ua", "UA");
+		case "uk":
+			return new Locale("uk", "UA");
 		default:
 			return Locale.ENGLISH;
 		}

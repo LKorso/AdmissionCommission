@@ -19,14 +19,15 @@ public class LocalizationFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpSession session = httpRequest.getSession();
-		System.out.println("in localliz filter");
-		if(session.getAttribute("content") == null){
-			session.setAttribute("content", Localizer.loadResources(httpRequest.getLocale()));
-		} else if (httpRequest.getParameter("country") != null){
+		System.out.println("locale: " + httpRequest.getLocale());
+		if (request.getParameter("locale") != null){
 			System.out.println("next adding content");
+			session.setAttribute("locale", request.getParameter("locale"));
 			session.setAttribute("content", Localizer.
-					loadResources(Localizer.getLocale(httpRequest.getParameter("country"))));
-		}
+					loadResources(Localizer.getLocale((String) session.getAttribute("locale"))));
+		} else if(session.getAttribute("content") == null || session.getAttribute("locale") == null){
+			session.setAttribute("content", Localizer.loadResources(httpRequest.getLocale()));
+		} 
 		chain.doFilter(request, response);
 	}
 	

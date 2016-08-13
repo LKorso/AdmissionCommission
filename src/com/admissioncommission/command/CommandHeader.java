@@ -36,6 +36,10 @@ public class CommandHeader implements ICommand {
 					break;
 				}
 			}
+		} else if(request.getParameter("locale") != null){
+			request.setAttribute(ATRIBUTE_REDIRECT, true);
+			page = request.getSession().getAttribute("currentPage") != null ? 
+					(String) request.getSession().getAttribute("currentPage") : PageConfigurator.getConfigurator().getPage(PageConfigurator.LOGIN_PAGE);
 		}
 		return page;
 	}

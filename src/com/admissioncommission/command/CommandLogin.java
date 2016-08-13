@@ -55,6 +55,7 @@ public class CommandLogin implements ICommand {
 		}
 		
 		request.getSession().setAttribute(ATRIBUTE_USER, currentUser);
+		request.setAttribute(ATRIBUTE_REDIRECT, true);
 		
 		switch (identifyUser(currentUser)) {
 		case USER_TYPE_ADMINISTRATOR:

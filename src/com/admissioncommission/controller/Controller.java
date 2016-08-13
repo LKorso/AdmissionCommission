@@ -24,6 +24,7 @@ public class Controller extends HttpServlet {
     	try{
     		ICommand command = ControllerHelper.getHelper().getCommand(request);
     		page = command.render(request, response);
+    		request.getSession().setAttribute("currentPage", page);
     		if(request.getAttribute("redirect") != null){
     			response.sendRedirect(request.getContextPath() + page);
     		}else {

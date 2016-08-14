@@ -88,7 +88,7 @@ public class ApplicationDao implements IApplicationDao {
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
 			while(result.next()){
-				applications.add(setApplications(result));
+				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -105,7 +105,7 @@ public class ApplicationDao implements IApplicationDao {
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_ID + id)) {
 			while(result.next()){
-				currentApplication = setApplications(result);
+				currentApplication = setApplication(result);
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -122,7 +122,7 @@ public class ApplicationDao implements IApplicationDao {
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_APPLICANT_ID + applicantId)) {
 			while(result.next()){
-				applications.add(setApplications(result));
+				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -139,7 +139,7 @@ public class ApplicationDao implements IApplicationDao {
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_FACULTY_ID + facultyId)) {
 			while(result.next()){
-				applications.add(setApplications(result));
+				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -156,7 +156,7 @@ public class ApplicationDao implements IApplicationDao {
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_STATUS_ID + statusId)) {
 			while(result.next()){
-				applications.add(setApplications(result));
+				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -172,7 +172,7 @@ public class ApplicationDao implements IApplicationDao {
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(createCustomQuery(criterions))) {
 			while(result.next()){
-				applications.add(setApplications(result));
+				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -181,7 +181,7 @@ public class ApplicationDao implements IApplicationDao {
 		return applications;
 	}
 	
-	private Application setApplications(ResultSet result) throws SQLException{
+	private Application setApplication(ResultSet result) throws SQLException{
 		Application application = new Application();
 		
 		application.setId(result.getInt(ID));

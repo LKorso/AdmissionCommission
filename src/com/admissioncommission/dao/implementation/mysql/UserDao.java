@@ -101,7 +101,7 @@ public class UserDao implements IUserDao {
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
-			users = createEntetiesList(result);
+			users.add(setUser(result));
 		} catch(SQLException exception){
 			
 		}
@@ -115,7 +115,7 @@ public class UserDao implements IUserDao {
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(getSelectSpecificUserQuery(userType))) {
-			users = createEntetiesList(result);
+			users.add(setUser(result));
 		} catch(SQLException exception){
 			
 		}
@@ -124,20 +124,12 @@ public class UserDao implements IUserDao {
 
 	@Override
 	public User findById(int id) {
-		User currentUser = new User();
+		User currentUser = null;
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_ID + id)) {
 			while(result.next()){
-				currentUser.setId(result.getInt(ID));
-				currentUser.setLastName(result.getString(LAST_NAME));
-				currentUser.setFirstName(result.getString(FIRST_NAME));
-				currentUser.setDateOfBirth(result.getDate(DATE_OF_BIRTH));
-				currentUser.setEmail(result.getString(EMAIL));
-				currentUser.setPhone(result.getString(PHONE));
-				currentUser.setSex(result.getString(SEX));
-				currentUser.setUserTypeId(result.getInt(USER_TYPE_ID));
-				currentUser.setFacultyId(result.getInt(FACULTY_ID));
+				currentUser = setUser(result);
 			}
 		} catch(SQLException exception) {
 			
@@ -146,21 +138,13 @@ public class UserDao implements IUserDao {
 	}
 	
 	public User findByEmailPassword(String email, String password){
-		User currentUser = new User();
+		User currentUser = null;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(getFindByEmailPassQuery(email, password))) {
 			while(result.next()){
-				currentUser.setId(result.getInt(ID));
-				currentUser.setLastName(result.getString(LAST_NAME));
-				currentUser.setFirstName(result.getString(FIRST_NAME));
-				currentUser.setDateOfBirth(result.getDate(DATE_OF_BIRTH));
-				currentUser.setEmail(result.getString(EMAIL));
-				currentUser.setPhone(result.getString(PHONE));
-				currentUser.setSex(result.getString(SEX));
-				currentUser.setUserTypeId(result.getInt(USER_TYPE_ID));
-				currentUser.setFacultyId(result.getInt(FACULTY_ID));
+				currentUser = setUser(result);
 			}
 		} catch(SQLException exception) {
 			exception.printStackTrace();
@@ -210,23 +194,17 @@ public class UserDao implements IUserDao {
 		return builder.toString();
 	}
 	
-	private List<User> createEntetiesList(ResultSet result) throws SQLException{
-		User currentUser;
-		List<User> users = new ArrayList<User>();
-		
-		while(result.next()){
-			currentUser = new User();
-			currentUser.setId(result.getInt(ID));
-			currentUser.setLastName(result.getString(LAST_NAME));
-			currentUser.setFirstName(result.getString(FIRST_NAME));
-			currentUser.setDateOfBirth(result.getDate(DATE_OF_BIRTH));
-			currentUser.setEmail(result.getString(EMAIL));
-			currentUser.setPhone(result.getString(PHONE));
-			currentUser.setSex(result.getString(SEX));
-			currentUser.setUserTypeId(result.getInt(USER_TYPE_ID));
-			currentUser.setFacultyId(result.getInt(FACULTY_ID));
-			users.add(currentUser);
-		}
-		return users;
+	private User setUser(ResultSet result) throws SQLException{
+		User currentUser = new User();
+		currentUser.setId(result.getInt(ID));
+		currentUser.setLastName(result.getString(LAST_NAME));
+		currentUser.setFirstName(result.getString(FIRST_NAME));
+		currentUser.setDateOfBirth(result.getDate(DATE_OF_BIRTH));
+		currentUser.setEmail(result.getString(EMAIL));
+		currentUser.setPhone(result.getString(PHONE));
+		currentUser.setSex(result.getString(SEX));
+		currentUser.setUserTypeId(result.getInt(USER_TYPE_ID));
+		currentUser.setFacultyId(result.getInt(FACULTY_ID));
+		return currentUser;
 	}
 }

@@ -9,15 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.admissioncommission.connection.Connector;
-import com.admissioncommission.dao.IFacultyDao;
-import com.admissioncommission.enteties.Faculty;
+import com.admissioncommission.dao.IPriorityDao;
+import com.admissioncommission.enteties.Priority;
 
-public class FacultyDao implements IFacultyDao {
-	private static final String QUERY_FOR_DELETE = "DELETE FROM faculty WHERE id = ?";
-	private static final String QUERY_FOR_UPDATE = "UPDATE faculty SET name = ? WHERE id = ?";
-	private static final String QUERY_FOR_INSERT = "INSERT INTO faculty(name, students_number, short_name) VALUES (?,?,?)";
-	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM faculty";
-	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM faculty WHERE id = ";
+public class PriorityDao implements IPriorityDao {
+	private static final String QUERY_FOR_DELETE = "DELETE FROM priority WHERE id = ?";
+	private static final String QUERY_FOR_UPDATE = "UPDATE priority SET priority = ? WHERE id = ?";
+	private static final String QUERY_FOR_INSERT = "INSERT INTO priority(priority) VALUES (?)";
+	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM priority";
+	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM priority WHERE id = ";
+	
 	
 	@Override
 	public void delete(int id) {
@@ -31,10 +32,10 @@ public class FacultyDao implements IFacultyDao {
 	}
 
 	@Override
-	public void update(int id, String newName) {
+	public void update(int id, String newPriority) {
 		try(Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(QUERY_FOR_UPDATE)) {
-			statement.setString(1, newName);
+			statement.setString(1, newPriority);
 			statement.setInt(2, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
@@ -43,58 +44,56 @@ public class FacultyDao implements IFacultyDao {
 	}
 
 	@Override
-	public void insert(Faculty newFaculty) {
+	public void insert(Priority newPriority) {
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(QUERY_FOR_INSERT)) {
-			statement.setString(1, newFaculty.getName());
-			statement.setInt(2, newFaculty.getStudentsNumber());
-			statement.setString(3, newFaculty.getShortName());
+			statement.setInt(1, newPriority.getPriority());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}
+
 	}
 
 	@Override
-	public List<Faculty> selectAll() {
-		List<Faculty> faculties = new ArrayList<Faculty>();
+	public List<Priority> selectAll() {
+		List<Priority> pririties = new ArrayList<Priority>();
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
 			while(result.next()){
-				faculties.add(setFaculty(result));
+				pririties.add(setPriority(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}
 		
-		return faculties;
+		return pririties;
 	}
 
 	@Override
-	public Faculty findById(int id) {
-		Faculty currentFaculty = null;
+	public Priority findById(int id) {
+		Priority currentPriority = null;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_ID + id)) {
 			while(result.next()){
-				currentFaculty = setFaculty(result);
+				currentPriority = setPriority(result);
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}
 		
-		return currentFaculty;
+		return currentPriority;
+	}
+	
+	private Priority setPriority(ResultSet result) throws SQLException{
+		Priority currentPriority = new Priority();
+		currentPriority.setId(result.getInt("id"));
+		currentPriority.setPriority(result.getInt("priority"));
+		return currentPriority;
 	}
 
-	private Faculty setFaculty(ResultSet result) throws SQLException{
-		Faculty currentFaculty = new Faculty();
-		currentFaculty.setId(result.getInt("id"));
-		currentFaculty.setName(result.getString("name"));
-		currentFaculty.setShortName(result.getString("short_name"));
-		currentFaculty.setStudentsNumber(result.getInt("students_number"));
-		return currentFaculty;
-	}
 }

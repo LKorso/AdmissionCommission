@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IApplicantMarkDao;
-import com.admissioncommission.dao.creators.QueryBuilder;
 import com.admissioncommission.enteties.ApplicantMark;
 
 public class ApplicantMarkDao implements IApplicantMarkDao {
@@ -38,7 +37,6 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 		} catch(SQLException exception) {
 			
 		}
-
 	}
 
 	@Override
@@ -81,16 +79,11 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 	@Override
 	public List<ApplicantMark> selectAll() {
 		List<ApplicantMark> mark = new ArrayList<ApplicantMark>();
-		ApplicantMark applicantMark = new ApplicantMark();
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
 			while(result.next()){
-				applicantMark.setId(result.getInt(ID));
-				applicantMark.setApplicantId(result.getInt(APPLICANT_ID));
-				applicantMark.setSubjectId(result.getInt(SUBJECT_ID));
-				applicantMark.setMark(result.getDouble(MARK));
-				mark.add(applicantMark);
+				mark.add(setApplicantMark(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -101,18 +94,12 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 	@Override
 	public List<ApplicantMark> findByApplicantId(int applicantId) {
 		List<ApplicantMark> marks = new ArrayList<ApplicantMark>();
-		ApplicantMark applicantMark;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_APPLICANT_ID + applicantId)) {
 			while(result.next()){
-				applicantMark = new ApplicantMark();
-				applicantMark.setId(result.getInt(ID));
-				applicantMark.setApplicantId(result.getInt(APPLICANT_ID));
-				applicantMark.setSubjectId(result.getInt(SUBJECT_ID));
-				applicantMark.setMark(result.getDouble(MARK));
-				marks.add(applicantMark);
+				marks.add(setApplicantMark(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -124,17 +111,12 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 	@Override
 	public List<ApplicantMark> findBySubjectId(int subjectId) {
 		List<ApplicantMark> marks = new ArrayList<ApplicantMark>();
-		ApplicantMark applicantMark = new ApplicantMark();
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_SUBJECT_ID + subjectId)) {
 			while(result.next()){
-				applicantMark.setId(result.getInt(ID));
-				applicantMark.setApplicantId(result.getInt(APPLICANT_ID));
-				applicantMark.setSubjectId(result.getInt(SUBJECT_ID));
-				applicantMark.setMark(result.getDouble(MARK));
-				marks.add(applicantMark);
+				marks.add(setApplicantMark(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -144,21 +126,27 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 	}
 	
 	public ApplicantMark findById(int id){
-		ApplicantMark applicantMark = new ApplicantMark();
+		ApplicantMark applicantMark = null;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_ID + id)) {
 			while(result.next()){
-				applicantMark.setId(result.getInt(ID));
-				applicantMark.setApplicantId(result.getInt(APPLICANT_ID));
-				applicantMark.setSubjectId(result.getInt(SUBJECT_ID));
-				applicantMark.setMark(result.getDouble(MARK));
+				applicantMark = setApplicantMark(result);
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}
 		
+		return applicantMark;
+	}
+	
+	private ApplicantMark setApplicantMark(ResultSet result) throws SQLException{
+		ApplicantMark applicantMark = new ApplicantMark();
+		applicantMark.setId(result.getInt(ID));
+		applicantMark.setApplicantId(result.getInt(APPLICANT_ID));
+		applicantMark.setSubjectId(result.getInt(SUBJECT_ID));
+		applicantMark.setMark(result.getDouble(MARK));
 		return applicantMark;
 	}
 }

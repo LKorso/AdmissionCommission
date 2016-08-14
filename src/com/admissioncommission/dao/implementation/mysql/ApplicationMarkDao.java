@@ -77,15 +77,12 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 	@Override
 	public List<ApplicationMark> selectAll() {
 		List<ApplicationMark> applicationMarks = new ArrayList<ApplicationMark>();
-		ApplicationMark currentMark = new ApplicationMark();
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
 			while(result.next()){
-				currentMark.setApplicationId(result.getInt(APPLICATION_ID));
-				currentMark.setMarkId(result.getInt(MARK_ID));
-				applicationMarks.add(currentMark);
+				applicationMarks.add(setApplicationMark(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -97,16 +94,12 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 	@Override
 	public List<ApplicationMark> findByApplicationId(int applicationId) {
 		List<ApplicationMark> applicationMarks = new ArrayList<ApplicationMark>();
-		ApplicationMark currentMark;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_APPLICATION_ID + applicationId)) {
 			while(result.next()){
-				currentMark = new ApplicationMark();
-				currentMark.setApplicationId(result.getInt(APPLICATION_ID));
-				currentMark.setMarkId(result.getInt(MARK_ID));
-				applicationMarks.add(currentMark);
+				applicationMarks.add(setApplicationMark(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -118,15 +111,12 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 	@Override
 	public List<ApplicationMark> findbyMarkid(int markId) {
 		List<ApplicationMark> applicationMarks = new ArrayList<ApplicationMark>();
-		ApplicationMark currentMark = new ApplicationMark();
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_MARK_ID +  markId)) {
 			while(result.next()){
-				currentMark.setApplicationId(result.getInt(APPLICATION_ID));
-				currentMark.setMarkId(result.getInt(MARK_ID));
-				applicationMarks.add(currentMark);
+				applicationMarks.add(setApplicationMark(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -135,4 +125,10 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 		return applicationMarks;
 	}
 
+	private ApplicationMark setApplicationMark(ResultSet result) throws SQLException{
+		ApplicationMark applicationMark = new ApplicationMark();
+		applicationMark.setApplicationId(result.getInt(APPLICATION_ID));
+		applicationMark.setMarkId(result.getInt(MARK_ID));
+		return applicationMark;
+	}
 }

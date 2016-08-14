@@ -61,15 +61,12 @@ public class UserTypeDao implements IUserTypeDao {
 	@Override
 	public List<UserType> selectAll() {
 		List<UserType> userTypes = new ArrayList<UserType>();
-		UserType currentUserType = new UserType();
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
 			while(result.next()){
-				currentUserType.setId(result.getInt(ID));
-				currentUserType.setType(result.getString(TYPE));
-				userTypes.add(currentUserType);
+				userTypes.add(setUserType(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -80,14 +77,13 @@ public class UserTypeDao implements IUserTypeDao {
 
 	@Override
 	public UserType findById(int id) {
-		UserType currentUserType = new UserType();
+		UserType currentUserType = null;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_ID + id)) {
 			while(result.next()){
-				currentUserType.setId(result.getInt(ID));
-				currentUserType.setType(result.getString(TYPE));
+				currentUserType = setUserType(result);
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -98,19 +94,25 @@ public class UserTypeDao implements IUserTypeDao {
 
 	@Override
 	public UserType findByType(String type) {
-		UserType currentUserType = new UserType();
+		UserType currentUserType = null;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_TYPE + type + "\"")) {
 			while(result.next()){
-				currentUserType.setId(result.getInt(ID));
-				currentUserType.setType(result.getString(TYPE));
+				currentUserType = setUserType(result);
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}
 		
+		return currentUserType;
+	}
+	
+	private UserType setUserType(ResultSet result) throws SQLException{
+		UserType currentUserType = new UserType();
+		currentUserType.setId(result.getInt(ID));
+		currentUserType.setType(result.getString(TYPE));
 		return currentUserType;
 	}
 }

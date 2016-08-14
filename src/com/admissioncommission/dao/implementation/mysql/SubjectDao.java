@@ -58,16 +58,12 @@ public class SubjectDao implements ISubjectDao {
 	@Override
 	public List<Subject> selectAll() {
 		List<Subject> subjects = new ArrayList<Subject>();
-		Subject currentSubject;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
 			while(result.next()){
-				currentSubject = new Subject();
-				currentSubject.setId(result.getInt("id"));
-				currentSubject.setName(result.getString("name"));
-				subjects.add(currentSubject);
+				subjects.add(seSubject(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -78,14 +74,13 @@ public class SubjectDao implements ISubjectDao {
 
 	@Override
 	public Subject findById(int id) {
-		Subject currentSubject = new Subject();
+		Subject currentSubject = null;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_ID + id)) {
 			while(result.next()){
-				currentSubject.setId(result.getInt("id"));
-				currentSubject.setName(result.getString("name"));
+				currentSubject = seSubject(result);
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -97,19 +92,25 @@ public class SubjectDao implements ISubjectDao {
 	
 	@Override
 	public Subject findByName(String name) {
-		Subject currentSubject = new Subject();
+		Subject currentSubject = null;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_NAME + name + "\"")) {
 			while(result.next()){
-				currentSubject.setId(result.getInt("id"));
-				currentSubject.setName(result.getString("name"));
+				currentSubject = seSubject(result);
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}
 		
+		return currentSubject;
+	}
+	
+	private Subject seSubject(ResultSet result) throws SQLException{
+		Subject currentSubject = new Subject();
+		currentSubject.setId(result.getInt("id"));
+		currentSubject.setName(result.getString("name"));
 		return currentSubject;
 	}
 }

@@ -78,17 +78,12 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 	@Override
 	public List<FacultySubject> selectAll() {
 		List<FacultySubject> facultySubjects = new ArrayList<FacultySubject>();
-		FacultySubject currentFacultySubject;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
 			while(result.next()){
-				currentFacultySubject = new FacultySubject();
-				currentFacultySubject.setFacultyId(result.getInt("faculty_id"));
-				currentFacultySubject.setSubjectId(result.getInt("subject_id"));
-				currentFacultySubject.setMinMark(result.getDouble("min_mark"));
-				facultySubjects.add(currentFacultySubject);
+				facultySubjects.add(setFacultySubject(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -100,17 +95,12 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 	@Override
 	public List<FacultySubject> findByFacultyId(int facultyId) {
 		List<FacultySubject> facultySubjects = new ArrayList<FacultySubject>();
-		FacultySubject currentFacultySubject;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_FACULTY_ID + facultyId)) {
 			while(result.next()){
-				currentFacultySubject = new FacultySubject();
-				currentFacultySubject.setFacultyId(result.getInt("faculty_id"));
-				currentFacultySubject.setSubjectId(result.getInt("subject_id"));
-				currentFacultySubject.setMinMark(result.getDouble("min_mark"));
-				facultySubjects.add(currentFacultySubject);
+				facultySubjects.add(setFacultySubject(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -122,17 +112,12 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 	@Override
 	public List<FacultySubject> findBySubjectId(int subjectId) {
 		List<FacultySubject> facultySubjects = new ArrayList<FacultySubject>();
-		FacultySubject currentFacultySubject;
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_SUBJECT_ID + subjectId)) {
 			while(result.next()){
-				currentFacultySubject = new FacultySubject();
-				currentFacultySubject.setFacultyId(result.getInt("faculty_id"));
-				currentFacultySubject.setSubjectId(result.getInt("subject_id"));
-				currentFacultySubject.setMinMark(result.getDouble("min_mark"));
-				facultySubjects.add(currentFacultySubject);
+				facultySubjects.add(setFacultySubject(result));
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();
@@ -141,4 +126,11 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 		return facultySubjects;
 	}
 
+	private FacultySubject setFacultySubject(ResultSet result) throws SQLException{
+		FacultySubject currentFacultySubject = new FacultySubject();
+		currentFacultySubject.setFacultyId(result.getInt("faculty_id"));
+		currentFacultySubject.setSubjectId(result.getInt("subject_id"));
+		currentFacultySubject.setMinMark(result.getDouble("min_mark"));
+		return currentFacultySubject;
+	}
 }

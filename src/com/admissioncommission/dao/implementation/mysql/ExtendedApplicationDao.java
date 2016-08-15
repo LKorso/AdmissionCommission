@@ -27,6 +27,8 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 	private static final String FILLING_DATE = "filling_date";
 	private static final String DESCRIPTION = "description";
 	private static final String APPLICATION_ID = "application_id";
+	private static final String PRIORITY = "priority";
+	private static final String RATING = "rating";
 	
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM extended_application";
 	private static final String QUERY_FOR_FIND_BY_APPLICANT_ID = "SELECT * FROM extended_application WHERE user_id = ";
@@ -102,6 +104,8 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 			currentApplication.setStatus(result.getString(STATUS));
 			currentApplication.setStatusId(result.getInt(STATUS_ID));
 			currentApplication.setUserId(result.getInt(USER_ID));
+			currentApplication.setRating(result.getDouble(RATING));
+			currentApplication.setPriority(result.getInt(PRIORITY));
 			applications.add(currentApplication);
 		}
 		return applications;

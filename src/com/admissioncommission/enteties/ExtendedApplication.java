@@ -17,19 +17,21 @@ public class ExtendedApplication {
 	private String status;
 	private Date fillingDate;
 	private String description;
+	private int priority;
+	private double rating;
 	
 	public ExtendedApplication() {
 	}
 
 	public ExtendedApplication(int userId, int facultyId, int statusId, int applicationId, String lastName,
-			String firstname, Date dateOfBirth, String sex, String phone, String email, String faculty, String status,
-			Date fillingDate, String description) {
+			String firstName, Date dateOfBirth, String sex, String phone, String email, String faculty, String status,
+			Date fillingDate, String description, int priority, double rating) {
 		this.userId = userId;
 		this.facultyId = facultyId;
 		this.statusId = statusId;
 		this.applicationId = applicationId;
 		this.lastName = lastName;
-		this.firstName = firstname;
+		this.firstName = firstName;
 		this.dateOfBirth = dateOfBirth;
 		this.sex = sex;
 		this.phone = phone;
@@ -38,6 +40,8 @@ public class ExtendedApplication {
 		this.status = status;
 		this.fillingDate = fillingDate;
 		this.description = description;
+		this.priority = priority;
+		this.rating = rating;
 	}
 
 	public int getUserId() {
@@ -152,6 +156,22 @@ public class ExtendedApplication {
 		this.description = description;
 	}
 
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -186,6 +206,10 @@ public class ExtendedApplication {
 			builder.append("\nDescription: ");
 			builder.append(description);
 		}
+		builder.append("\npriority: ");
+		builder.append(priority);
+		builder.append("\nrating: ");
+		builder.append(rating);
 		
 		return builder.toString();
 	}
@@ -204,6 +228,10 @@ public class ExtendedApplication {
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + priority;
+		long temp;
+		temp = Double.doubleToLongBits(rating);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + statusId;
@@ -264,7 +292,14 @@ public class ExtendedApplication {
 				return false;
 		} else if (!phone.equals(other.phone))
 			return false;
-		if (sex != other.sex)
+		if (priority != other.priority)
+			return false;
+		if (Double.doubleToLongBits(rating) != Double.doubleToLongBits(other.rating))
+			return false;
+		if (sex == null) {
+			if (other.sex != null)
+				return false;
+		} else if (!sex.equals(other.sex))
 			return false;
 		if (status == null) {
 			if (other.status != null)

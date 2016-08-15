@@ -3,7 +3,6 @@ package com.admissioncommission.logic;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;

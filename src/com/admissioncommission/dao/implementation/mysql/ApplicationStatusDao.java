@@ -101,7 +101,6 @@ public class ApplicationStatusDao implements IApplicationStatusDao {
 				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_STATUS + status + "\"")) {
 			while(result.next()){
 				currentStatus = setStatus(result);
-				System.out.println(currentStatus);
 			}
 		} catch (SQLException exception) {
 			exception.printStackTrace();

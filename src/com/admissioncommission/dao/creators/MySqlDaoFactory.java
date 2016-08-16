@@ -57,4 +57,9 @@ public class MySqlDaoFactory implements IDaoFactory {
 	public IExtendedApplicationDao getExtendedApplicationDao(){
 		return new ExtendedApplicationDao();
 	}
+	
+	@Override
+	public IPriorityDao getPriorityDao() {
+		return new PriorityDao();
+	}
 }

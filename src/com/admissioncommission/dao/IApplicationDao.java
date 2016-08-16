@@ -10,6 +10,7 @@ public interface IApplicationDao {
 	void update(HashMap<String, String> changes, HashMap<String, String> criterions);
 	void insert(Application newApplication);
 	void updateDescription(int id, String description);
+	void notEqualUpdate(String field, String newValue, String criterion);
 	List<Application> selectAll();
 	Application findbyId(int id);
 	List<Application> findByApplicantId(int applicantId);

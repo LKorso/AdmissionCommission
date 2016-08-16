@@ -9,5 +9,6 @@ public interface IPriorityDao {
 	void update(int id, String newPriority);
 	void insert(Priority newPriority);
 	List<Priority> selectAll();
+	List<Priority> selectAllSorted();
 	Priority findById(int id);
 }

@@ -17,8 +17,8 @@ public class PriorityDao implements IPriorityDao {
 	private static final String QUERY_FOR_UPDATE = "UPDATE priority SET priority = ? WHERE id = ?";
 	private static final String QUERY_FOR_INSERT = "INSERT INTO priority(priority) VALUES (?)";
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM priority";
+	private static final String QUERY_FOR_SELECT_ALL_SORTED = "SELECT * FROM priority ORDER BY priority";
 	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM priority WHERE id = ";
-	
 	
 	@Override
 	public void delete(int id) {
@@ -72,6 +72,23 @@ public class PriorityDao implements IPriorityDao {
 		return pririties;
 	}
 
+	@Override
+	public List<Priority> selectAllSorted() {
+		List<Priority> pririties = new ArrayList<Priority>();
+		
+		try(Connection connection = Connector.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL_SORTED)) {
+			while(result.next()){
+				pririties.add(setPriority(result));
+			}
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		
+		return pririties;
+	}
+	
 	@Override
 	public Priority findById(int id) {
 		Priority currentPriority = null;

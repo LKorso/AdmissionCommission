@@ -13,4 +13,5 @@ public interface IDaoFactory {
 	IUserDao getUserDao();
 	IUserTypeDao getUserTypeDao();
 	IExtendedApplicationDao getExtendedApplicationDao();
+	IPriorityDao getPriorityDao();
 }

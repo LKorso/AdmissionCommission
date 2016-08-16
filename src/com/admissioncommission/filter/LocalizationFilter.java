@@ -19,9 +19,7 @@ public class LocalizationFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpSession session = httpRequest.getSession();
-		System.out.println("locale: " + httpRequest.getLocale());
 		if (request.getParameter("locale") != null){
-			System.out.println("next adding content");
 			session.setAttribute("locale", request.getParameter("locale"));
 			session.setAttribute("content", Localizer.
 					loadResources(Localizer.getLocale((String) session.getAttribute("locale"))));

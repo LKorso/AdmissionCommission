@@ -149,16 +149,22 @@
 			</div>
 		</c:forEach>
 	<!--End of collapse panel-->
-
-	<div class="row">
-		<h3 class="col-xs-10">${content.getString("admin.new_admin_description")}</h3>
-			<form action="Controller" method="POST">
-				<input type="hidden" name="command" value="admin"/>
+	
+	<form action="Controller" method="POST">
+		<input type="hidden" name="command" value="admin"/>
+		<div class="row">
+			<h3 class="col-xs-10">${content.getString("admin.new_admin_description")}</h3>
 				<button class="col-xs-2" name="newAdmininstrator" value="newAdmininstrator">
 					${content.getString("admin.new_admin")}
 				</button>
-			</form>
-	</div>
+		</div>
+		<div class="row">
+			<h3 class="col-xs-10">${content.getString("admin.enroll_students_description")}</h3>
+			<button class="col-xs-2" name="enrollStudents" value="enrollStudents">
+					${content.getString("admin.enroll_students")}
+			</button>
+		</div>
+	</form>
 	</div>
 	
 	<!-- SCRIPTS -->

@@ -31,6 +31,7 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 	private static final String RATING = "rating";
 	
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM extended_application";
+	private static final String QUERY_FOR_SELECT_ALL_SORTED = "SELECT * FROM extended_application ORDER BY rating DESC";
 	private static final String QUERY_FOR_FIND_BY_APPLICANT_ID = "SELECT * FROM extended_application WHERE user_id = ";
 	
 	@Override
@@ -39,6 +40,21 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 		
 		try(Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(QUERY_FOR_SELECT_ALL);
+				ResultSet result = statement.executeQuery()){
+			applications = createEntetiesList(result);
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		
+		return applications;
+	}
+	
+	@Override
+	public List<ExtendedApplication> selectAllSorted() {
+		List<ExtendedApplication> applications = new ArrayList<>();
+		
+		try(Connection connection = Connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(QUERY_FOR_SELECT_ALL_SORTED);
 				ResultSet result = statement.executeQuery()){
 			applications = createEntetiesList(result);
 		} catch (SQLException exception) {
@@ -78,9 +94,31 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 		return applications;
 	};
 	
+	@Override
+	public List<ExtendedApplication> customSelectSorted(HashMap<String,String> criterions, String order) {
+		List<ExtendedApplication> applications = new ArrayList<>();
+		
+		try(Connection connection = Connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(createCustomQuery(criterions, "rating", order));
+				ResultSet result = statement.executeQuery()){
+			applications = createEntetiesList(result);
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		
+		return applications;
+	};
+	
 	private String createCustomQuery(HashMap<String, String> criterions){
 		QueryBuilder queryBuilder = new QueryBuilder(QueryBuilder.SELECT, TABLE_NAME); 
 		queryBuilder.addCriterion(criterions);
+		return queryBuilder.toString();
+	}
+	
+	private String createCustomQuery(HashMap<String, String> criterions, String sortCriterion, String order){
+		QueryBuilder queryBuilder = new QueryBuilder(QueryBuilder.SELECT, TABLE_NAME); 
+		queryBuilder.addCriterion(criterions);
+		queryBuilder.addOrderBy(sortCriterion, order);
 		return queryBuilder.toString();
 	}
 	

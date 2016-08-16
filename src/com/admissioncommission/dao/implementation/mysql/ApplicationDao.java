@@ -55,6 +55,16 @@ public class ApplicationDao implements IApplicationDao {
 	}
 	
 	@Override
+	public void notEqualUpdate(String field, String newValue, String criterion) {
+		try(Connection connection = Connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(getQueryForNotEqualUpdate(field, newValue, criterion));) {
+			statement.executeUpdate();
+		} catch(SQLException exception) {
+			exception.printStackTrace();
+		}
+	}
+	
+	@Override
 	public void updateDescription(int id, String description){
 		try(Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(QUERY_FOR_UPDATE_DESCRIPTION);) {
@@ -206,5 +216,11 @@ public class ApplicationDao implements IApplicationDao {
 		builder.addCriterion(criterions);
 		return builder.toString();
 	}
-
+	
+	private String getQueryForNotEqualUpdate(String field, String newValue, String criterion){
+		QueryBuilder builder = new QueryBuilder(QueryBuilder.UPDATE, TABLE_NAME);
+		builder.addChanges(field, newValue);
+		builder.addNotEqual(field, criterion);
+		return builder.toString();
+	}
 }

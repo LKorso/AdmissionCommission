@@ -6,8 +6,10 @@ import java.util.Set;
 public class QueryBuilder {
 	public static final int SELECT = 1;
 	public static final int UPDATE = 2;
+	public static final String ORDER_DESC = "DESC";
+	public static final String ORDER_ASC = "ASC";
 	
-	private StringBuilder selectQuery = new StringBuilder();
+	private StringBuilder query = new StringBuilder();
 	private boolean isFirstCriterion = true;
 	private boolean isFirstChange = true;
 	
@@ -18,13 +20,13 @@ public class QueryBuilder {
 		
 		switch (queryType) {
 		case SELECT:
-			selectQuery.append(SELECT_QUERY_BEGINING + tableName);
+			query.append(SELECT_QUERY_BEGINING + tableName);
 			break;
 		case UPDATE:
-			selectQuery.append(UPDATE_QUERY_BEGINING + tableName + " SET ");
+			query.append(UPDATE_QUERY_BEGINING + tableName + " SET ");
 			break;
 		default:
-			selectQuery.append(SELECT_QUERY_BEGINING + tableName);
+			query.append(SELECT_QUERY_BEGINING + tableName);
 			break;
 		}
 		
@@ -38,17 +40,20 @@ public class QueryBuilder {
 		}
 	}
 	
+	public void addNotEqual(String fieldName, String value){
+		firstCriterionCheck();
+		query.append(fieldName);
+		query.append(" != \"");
+		query.append(value);
+		query.append("\" ");
+	}
+	
 	public void addCriterion(String fieldName, String value){
-		if(isFirstCriterion){
-			selectQuery.append(" WHERE ");
-			isFirstCriterion = false;
-		} else {
-			selectQuery.append(" AND ");
-		}
-		selectQuery.append(fieldName);
-		selectQuery.append(" = \"");
-		selectQuery.append(value);
-		selectQuery.append("\"");
+		firstCriterionCheck();
+		query.append(fieldName);
+		query.append(" = \"");
+		query.append(value);
+		query.append("\" ");
 	}
 	
 	public void addChanges(HashMap<String, String> changes){
@@ -59,20 +64,35 @@ public class QueryBuilder {
 		}
 	}
 	
+	public void addOrderBy(String criterion, String order){
+		query.append("ORDER BY ");
+		query.append(criterion);
+		query.append(" " + order);
+	}
+	
 	public void addChanges(String fieldName, String value){
 		if(!isFirstChange){
-			selectQuery.append(", ");
+			query.append(", ");
 		} else {
 			isFirstChange = false;
 		}
-		selectQuery.append(fieldName);
-		selectQuery.append(" = \"");
-		selectQuery.append(value);
-		selectQuery.append("\"");
+		query.append(fieldName);
+		query.append(" = \"");
+		query.append(value);
+		query.append("\" ");
 	}
 
 	@Override
 	public String toString() {
-		return selectQuery.toString();
+		return query.toString();
 	} 
+	
+	private void firstCriterionCheck(){
+		if(isFirstCriterion){
+			query.append(" WHERE ");
+			isFirstCriterion = false;
+		} else {
+			query.append(" AND ");
+		}
+	}
 }

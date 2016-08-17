@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.ISubjectDao;
 import com.admissioncommission.enteties.Subject;
@@ -19,6 +22,8 @@ public class SubjectDao implements ISubjectDao {
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM subject";
 	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM subject WHERE id = ";
 	private static final String QUERY_FOR_FIND_BY_NAME = "SELECT * FROM subject WHERE name = \"";
+
+	private static final Logger LOGGER = LogManager.getLogger(SubjectDao.class);
 	
 	@Override
 	public void delete(int id) {
@@ -27,7 +32,7 @@ public class SubjectDao implements ISubjectDao {
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing subject", exception);
 		}
 	}
 
@@ -39,7 +44,7 @@ public class SubjectDao implements ISubjectDao {
 			statement.setInt(2, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating mark", exception);
 		}
 	}
 
@@ -51,7 +56,7 @@ public class SubjectDao implements ISubjectDao {
 			statement.setString(2, newSubject.getName());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 	}
 
@@ -66,7 +71,7 @@ public class SubjectDao implements ISubjectDao {
 				subjects.add(seSubject(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return subjects;
@@ -83,7 +88,7 @@ public class SubjectDao implements ISubjectDao {
 				currentSubject = seSubject(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by id", exception);
 		}
 		
 		return currentSubject;
@@ -101,7 +106,7 @@ public class SubjectDao implements ISubjectDao {
 				currentSubject = seSubject(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by name", exception);
 		}
 		
 		return currentSubject;

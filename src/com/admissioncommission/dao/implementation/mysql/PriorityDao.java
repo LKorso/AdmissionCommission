@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IPriorityDao;
 import com.admissioncommission.enteties.Priority;
@@ -19,6 +22,8 @@ public class PriorityDao implements IPriorityDao {
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM priority";
 	private static final String QUERY_FOR_SELECT_ALL_SORTED = "SELECT * FROM priority ORDER BY priority";
 	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM priority WHERE id = ";
+
+	private static final Logger LOGGER = LogManager.getLogger(PriorityDao.class);
 	
 	@Override
 	public void delete(int id) {
@@ -27,7 +32,7 @@ public class PriorityDao implements IPriorityDao {
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing priority", exception);
 		}
 	}
 
@@ -39,7 +44,7 @@ public class PriorityDao implements IPriorityDao {
 			statement.setInt(2, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating priority", exception);
 		}
 	}
 
@@ -50,7 +55,7 @@ public class PriorityDao implements IPriorityDao {
 			statement.setInt(1, newPriority.getPriority());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 
 	}
@@ -66,7 +71,7 @@ public class PriorityDao implements IPriorityDao {
 				pririties.add(setPriority(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return pririties;
@@ -83,7 +88,7 @@ public class PriorityDao implements IPriorityDao {
 				pririties.add(setPriority(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error sorted selecting from table", exception);
 		}
 		
 		return pririties;
@@ -100,7 +105,7 @@ public class PriorityDao implements IPriorityDao {
 				currentPriority = setPriority(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by id", exception);
 		}
 		
 		return currentPriority;

@@ -8,20 +8,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IUserTypeDao;
 import com.admissioncommission.enteties.UserType;
 
 public class UserTypeDao implements IUserTypeDao {
-	public static final String ID = "id";
-	public static final String TYPE = "type";
-	
+	private static final String ID = "id";
+	private static final String TYPE = "type";
 	private static final String QUERY_FOR_DELETE = "DELETE FROM user_type WHERE id = ?";
 	private static final String QUERY_FOR_UPDATE = "UPDATE user_type SET name = ? WHERE id = ?";
 	private static final String QUERY_FOR_INSERT = "INSERT INTO user_type(id, type) VALUES (?,?)";
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM user_type";
 	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM user_type WHERE id = ";
 	private static final String QUERY_FOR_FIND_BY_TYPE = "SELECT * FROM user_type WHERE type = \"";
+
+	private static final Logger LOGGER = LogManager.getLogger(UserTypeDao.class);
 	
 	@Override
 	public void delete(int id) {
@@ -30,7 +34,7 @@ public class UserTypeDao implements IUserTypeDao {
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing user type", exception);
 		}
 	}
 
@@ -42,7 +46,7 @@ public class UserTypeDao implements IUserTypeDao {
 			statement.setInt(2, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updatine user type", exception);
 		}
 	}
 
@@ -54,7 +58,7 @@ public class UserTypeDao implements IUserTypeDao {
 			statement.setString(2, newType.getType());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 	}
 
@@ -69,7 +73,7 @@ public class UserTypeDao implements IUserTypeDao {
 				userTypes.add(setUserType(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return userTypes;
@@ -86,7 +90,7 @@ public class UserTypeDao implements IUserTypeDao {
 				currentUserType = setUserType(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by id", exception);
 		}
 		
 		return currentUserType;
@@ -103,7 +107,7 @@ public class UserTypeDao implements IUserTypeDao {
 				currentUserType = setUserType(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by type", exception);
 		}
 		
 		return currentUserType;

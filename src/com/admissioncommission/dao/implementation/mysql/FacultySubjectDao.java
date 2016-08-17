@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IFacultySubjectDao;
 import com.admissioncommission.enteties.FacultySubject;
@@ -23,6 +26,8 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM faculty_subject";
 	private static final String QUERY_FOR_FIND_BY_SUBJECT_ID = "SELECT * FROM faculty_subject WHERE subject_id = ";
 	private static final String QUERY_FOR_FIND_BY_FACULTY_ID = "SELECT * FROM faculty_subject WHERE faculty_id = ";
+
+	private static final Logger LOGGER = LogManager.getLogger(FacultySubjectDao.class);
 	
 	@Override
 	public void delete(int facultyId, int subjectId) {
@@ -32,7 +37,7 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 			statement.setInt(2, subjectId);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing faculty-subject", exception);
 		}
 	}
 
@@ -45,7 +50,7 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 			statement.setInt(3, subjectId);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error changeing subject", exception);
 		}
 	}
 
@@ -58,7 +63,7 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 			statement.setInt(3, subjectId);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error changeing faculty", exception);
 		}
 	}
 
@@ -71,7 +76,7 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 			statement.setDouble(3, newFacultySubject.getMinMark());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 	}
 
@@ -86,7 +91,7 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 				facultySubjects.add(setFacultySubject(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return facultySubjects;
@@ -103,7 +108,7 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 				facultySubjects.add(setFacultySubject(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by faculty id", exception);
 		}
 		
 		return facultySubjects;
@@ -120,7 +125,7 @@ public class FacultySubjectDao implements IFacultySubjectDao {
 				facultySubjects.add(setFacultySubject(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by subject id", exception);
 		}
 		
 		return facultySubjects;

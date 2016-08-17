@@ -8,21 +8,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IApplicationStatusDao;
 import com.admissioncommission.enteties.ApplicationStatus;
 
 public class ApplicationStatusDao implements IApplicationStatusDao {
-	public static final String ID = "id";
-	public static final String STATUS = "status";
-	
+	private static final String ID = "id";
+	private static final String STATUS = "status";
 	private static final String QUERY_FOR_DELETE = "DELETE FROM application_status WHERE id = ?";
 	private static final String QUERY_FOR_UPDATE = "UPDATE application_status SET status = ? WHERE id = ?";
 	private static final String QUERY_FOR_INSERT = "INSERT INTO application_status (status) VALUES(?)";
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM application_status";
 	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM application_status WHERE id = ";
 	private static final String QUERY_FOR_FIND_BY_STATUS = "SELECT * FROM application_status WHERE status = \"";
-
+	
+	private static final Logger LOGGER = LogManager.getLogger(ApplicationStatusDao.class);
+	
 	@Override
 	public void delete(int id) {
 		try(Connection connection = Connector.getConnection();
@@ -30,7 +34,7 @@ public class ApplicationStatusDao implements IApplicationStatusDao {
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing status", exception);
 		}
 	}
 
@@ -42,7 +46,7 @@ public class ApplicationStatusDao implements IApplicationStatusDao {
 			statement.setInt(2, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating status", exception);
 		}
 	}
 
@@ -53,7 +57,7 @@ public class ApplicationStatusDao implements IApplicationStatusDao {
 			statement.setString(1, newStatus.getStatus());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 
 	}
@@ -69,7 +73,7 @@ public class ApplicationStatusDao implements IApplicationStatusDao {
 				statuses.add(setStatus(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return statuses;
@@ -86,7 +90,7 @@ public class ApplicationStatusDao implements IApplicationStatusDao {
 				currentStatus = setStatus(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by id", exception);
 		}
 		
 		return currentStatus;
@@ -103,7 +107,7 @@ public class ApplicationStatusDao implements IApplicationStatusDao {
 				currentStatus = setStatus(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by status", exception);
 		}
 		
 		return currentStatus;

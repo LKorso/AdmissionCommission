@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IExtendedApplicationDao;
 import com.admissioncommission.dao.creators.QueryBuilder;
@@ -29,10 +32,11 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 	private static final String APPLICATION_ID = "application_id";
 	private static final String PRIORITY = "priority";
 	private static final String RATING = "rating";
-	
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM extended_application";
 	private static final String QUERY_FOR_SELECT_ALL_SORTED = "SELECT * FROM extended_application ORDER BY rating DESC";
 	private static final String QUERY_FOR_FIND_BY_APPLICANT_ID = "SELECT * FROM extended_application WHERE user_id = ";
+	
+	private static final Logger LOGGER = LogManager.getLogger(ExtendedApplicationDao.class);
 	
 	@Override
 	public List<ExtendedApplication> selectAll() {
@@ -43,7 +47,7 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 				ResultSet result = statement.executeQuery()){
 			applications = createEntetiesList(result);
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return applications;
@@ -58,7 +62,7 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 				ResultSet result = statement.executeQuery()){
 			applications = createEntetiesList(result);
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error sorted selecting from table", exception);
 		}
 		
 		return applications;
@@ -73,7 +77,7 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 				ResultSet result = statement.executeQuery()){
 			applications = createEntetiesList(result);
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by custom id", exception);
 		}
 		
 		return applications;
@@ -88,7 +92,7 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 				ResultSet result = statement.executeQuery()){
 			applications = createEntetiesList(result);
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error custom selecting from table", exception);
 		}
 		
 		return applications;
@@ -103,7 +107,7 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 				ResultSet result = statement.executeQuery()){
 			applications = createEntetiesList(result);
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error sorted custom selecting from table", exception);
 		}
 		
 		return applications;

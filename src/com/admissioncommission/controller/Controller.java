@@ -15,7 +15,7 @@ import com.admissioncommission.command.ICommand;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = LogManager.getFormatterLogger(Controller.class);
+	private static final Logger LOGGER = LogManager.getFormatterLogger(Controller.class);
        
     public Controller() {
     }
@@ -33,9 +33,9 @@ public class Controller extends HttpServlet {
                 dispatcher.forward(request, response);	
     		}
     	} catch(ServletException exception){
-    		exception.printStackTrace();
+    		LOGGER.error("Error while doing request", exception);
     	} catch (IOException exception) {
-    		exception.printStackTrace();
+    		LOGGER.error("Error while doing request", exception);
 		}
     }
     

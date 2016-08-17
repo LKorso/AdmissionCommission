@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IFacultyDao;
 import com.admissioncommission.enteties.Faculty;
@@ -18,6 +21,8 @@ public class FacultyDao implements IFacultyDao {
 	private static final String QUERY_FOR_INSERT = "INSERT INTO faculty(name, students_number, short_name) VALUES (?,?,?)";
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM faculty";
 	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM faculty WHERE id = ";
+
+	private static final Logger LOGGER = LogManager.getLogger(FacultyDao.class);
 	
 	@Override
 	public void delete(int id) {
@@ -26,7 +31,7 @@ public class FacultyDao implements IFacultyDao {
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing faculty", exception);
 		}
 	}
 
@@ -38,7 +43,7 @@ public class FacultyDao implements IFacultyDao {
 			statement.setInt(2, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating faculty", exception);
 		}
 	}
 
@@ -51,7 +56,7 @@ public class FacultyDao implements IFacultyDao {
 			statement.setString(3, newFaculty.getShortName());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 	}
 
@@ -66,7 +71,7 @@ public class FacultyDao implements IFacultyDao {
 				faculties.add(setFaculty(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return faculties;
@@ -83,7 +88,7 @@ public class FacultyDao implements IFacultyDao {
 				currentFaculty = setFaculty(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by id", exception);
 		}
 		
 		return currentFaculty;

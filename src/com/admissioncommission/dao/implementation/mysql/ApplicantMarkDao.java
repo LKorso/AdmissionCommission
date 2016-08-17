@@ -8,17 +8,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IApplicantMarkDao;
 import com.admissioncommission.enteties.ApplicantMark;
 
 public class ApplicantMarkDao implements IApplicantMarkDao {
-	public static final String ID = "id";
-	public static final String APPLICANT_ID = "applicant_id";
-	public static final String SUBJECT_ID = "subject_id";
-	public static final String MARK = "mark";
-	public static final String TABLE_NAME = "applicant_mark";
-	
+	private static final String ID = "id";
+	private static final String APPLICANT_ID = "applicant_id";
+	private static final String SUBJECT_ID = "subject_id";
+	private static final String MARK = "mark";
+	private static final String TABLE_NAME = "applicant_mark";
 	private static final String QUERY_FOR_DELETE = "DELETE FROM applicant_mark WHERE id = ?";
 	private static final String QUERY_FOR_UPDATE_MARK = "UPDATE applicant_mark SET mark = ? WHERE id = ?";
 	private static final String QUERY_FOR_UPDATE_SUBJECT = "UPDATE applicant_mark SET subject_id = ? WHERE id = ?";
@@ -28,6 +30,8 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 	private static final String QUERY_FOR_FIND_BY_SUBJECT_ID = "SELECT * FROM applicant_mark WHERE subject_id = ";
 	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM applicant_mark WHERE id = ";
 	
+	private static final Logger LOGGER = LogManager.getLogger(ApplicantMarkDao.class);
+	
 	@Override
 	public void delete(int id) {
 		try (Connection connection = Connector.getConnection();
@@ -35,7 +39,7 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch(SQLException exception) {
-			
+			LOGGER.error("Error deleteing mark", exception);
 		}
 	}
 
@@ -47,7 +51,7 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 			statement.setDouble(1, newMark);
 			statement.executeUpdate();
 		} catch(SQLException exception) {
-			
+			LOGGER.error("Error updating mark", exception);
 		}
 	}
 	
@@ -59,7 +63,7 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 			statement.setInt(1, subjectId);
 			statement.executeUpdate();
 		} catch(SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating mark with new subject id", exception);
 		}
 	}
 
@@ -72,7 +76,7 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 			statement.setDouble(3, newApplicantScore.getMark());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 	}
 
@@ -86,7 +90,7 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 				mark.add(setApplicantMark(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		return mark;
 	}
@@ -102,7 +106,7 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 				marks.add(setApplicantMark(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by applicant id", exception);
 		}
 		
 		return marks;
@@ -119,7 +123,7 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 				marks.add(setApplicantMark(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by subject id", exception);
 		}
 		
 		return marks;
@@ -135,7 +139,7 @@ public class ApplicantMarkDao implements IApplicantMarkDao {
 				applicantMark = setApplicantMark(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by id", exception);
 		}
 		
 		return applicantMark;

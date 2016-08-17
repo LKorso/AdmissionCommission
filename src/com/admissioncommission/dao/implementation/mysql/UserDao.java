@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IUserDao;
 import com.admissioncommission.dao.creators.QueryBuilder;
@@ -26,15 +29,15 @@ public class UserDao implements IUserDao {
 	private static final String PASSWORD = "password"; 
 	private static final String FACULTY_ID = "faculty_id";
 	private static final String TABLE_NAME = "user";
-	
 	private static final String USER_TYPE_ADMINISTRATOR = "Administrator";
 	private static final String USER_TYPE_APPLICANT = "Applicant";
 	private static final String USER_TYPE_STUDENT = "Student";
-	
 	private static final String QUERY_FOR_DELETE = "DELETE FROM user WHERE id = ?";
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM user";
 	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM user WHERE id = ";
 
+	private static final Logger LOGGER = LogManager.getLogger(UserDao.class);
+	
 	@Override
 	public void delete(int id) {
 		try(Connection connection = Connector.getConnection();
@@ -43,7 +46,7 @@ public class UserDao implements IUserDao {
 			statement.executeUpdate();
 			throw new SQLException();
 		} catch(SQLException exception) {
-			
+			LOGGER.error("Error deleteing user", exception);
 		}
 	}
 
@@ -57,7 +60,7 @@ public class UserDao implements IUserDao {
 				PreparedStatement statement = connection.prepareStatement(queryBuilder.toString());) {
 			statement.executeUpdate();
 		} catch(SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating mark", exception);
 		}
 	}
 	
@@ -69,7 +72,7 @@ public class UserDao implements IUserDao {
 			statement.setInt(3, id);
 			statement.executeUpdate();
 		} catch(SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating mark", exception);
 		}
 	}
 
@@ -90,12 +93,12 @@ public class UserDao implements IUserDao {
 				}
 				statement.executeUpdate();
 			} catch(SQLException exception){
-				exception.printStackTrace();
+				LOGGER.error("Error inserting into table ", exception);
 			}
 	}
 
 	@Override
-	public List<User> getAll() {
+	public List<User> selectAll() {
 		List<User> users = new ArrayList<User>();
 		
 		try(Connection connection = Connector.getConnection();
@@ -103,13 +106,13 @@ public class UserDao implements IUserDao {
 				ResultSet result = statement.executeQuery(QUERY_FOR_SELECT_ALL)) {
 			users.add(setUser(result));
 		} catch(SQLException exception){
-			
+			LOGGER.error("Error selecting from table", exception);
 		}
 		return users;
 	}
 
 	@Override
-	public List<User> getSpecificUsers(String userType) {
+	public List<User> selectSpecificUsers(String userType) {
 		List<User> users = new ArrayList<User>();
 		
 		try(Connection connection = Connector.getConnection();
@@ -117,7 +120,7 @@ public class UserDao implements IUserDao {
 				ResultSet result = statement.executeQuery(getSelectSpecificUserQuery(userType))) {
 			users.add(setUser(result));
 		} catch(SQLException exception){
-			
+			LOGGER.error("Error selecting specific user", exception);
 		}
 		return users;
 	}
@@ -132,7 +135,7 @@ public class UserDao implements IUserDao {
 				currentUser = setUser(result);
 			}
 		} catch(SQLException exception) {
-			
+			LOGGER.error("Error selecting from table by id", exception);
 		}
 		return currentUser;
 	}
@@ -147,7 +150,7 @@ public class UserDao implements IUserDao {
 				currentUser = setUser(result);
 			}
 		} catch(SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by email and password", exception);
 		}
 		
 		return currentUser;

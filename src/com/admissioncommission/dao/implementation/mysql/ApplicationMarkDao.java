@@ -8,14 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IApplicationMarkDao;
 import com.admissioncommission.enteties.ApplicationMark;
 
 public class ApplicationMarkDao implements IApplicationMarkDao {
-	public static final String APPLICATION_ID = "application_id";
-	public static final String MARK_ID = "mark_id";
-	
+	private static final String APPLICATION_ID = "application_id";
+	private static final String MARK_ID = "mark_id";
 	private static final String QUERY_FOR_DELETE = "DELETE FROM application_mark WHERE application_id = ? AND mark_id = ?";
 	private static final String QUERY_FOR_UPDATE_BY_APPLICATION_ID = "UPDATE application_mark SET mark_id = ? "
 			+ "WHERE application_id = ?";
@@ -26,6 +28,8 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 	private static final String QUERY_FOR_FIND_BY_APPLICATION_ID = "SELECT * FROM application_mark WHERE application_id = ";
 	private static final String QUERY_FOR_FIND_BY_MARK_ID = "SELECT * FROM application_mark WHERE mark_id = ";
 	
+	private static final Logger LOGGER = LogManager.getLogger(ApplicationMarkDao.class);
+	
 	@Override
 	public void delete(int applicationId, int markId) {
 		try(Connection connection = Connector.getConnection();
@@ -34,7 +38,7 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 			statement.setInt(2, markId);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing mark", exception);
 		}
 	}
 
@@ -46,7 +50,7 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 			statement.setInt(2, applicationId);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing mark by application id", exception);
 		}
 	}
 
@@ -58,7 +62,7 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 			statement.setInt(2, markId);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing mark by id", exception);
 		}
 	}
 
@@ -70,7 +74,7 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 			statement.setInt(2, newApplicationMark.getMarkId());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 	}
 
@@ -85,7 +89,7 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 				applicationMarks.add(setApplicationMark(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return applicationMarks;
@@ -102,7 +106,7 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 				applicationMarks.add(setApplicationMark(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by application id", exception);
 		}
 		
 		return applicationMarks;
@@ -119,7 +123,7 @@ public class ApplicationMarkDao implements IApplicationMarkDao {
 				applicationMarks.add(setApplicationMark(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by mark id", exception);
 		}
 		
 		return applicationMarks;

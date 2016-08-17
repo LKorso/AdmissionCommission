@@ -9,21 +9,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.connection.Connector;
 import com.admissioncommission.dao.IApplicationDao;
 import com.admissioncommission.dao.creators.QueryBuilder;
 import com.admissioncommission.enteties.Application;
 
 public class ApplicationDao implements IApplicationDao {
-	public static final String ID = "id";
-	public static final String FILLING_DATE = "filling_date";
-	public static final String APPLICANT_ID = "applicant_id";
-	public static final String FACULTY_ID = "faculty_id";
-	public static final String STATUS_ID = "status_id";
-	public static final String DESCRIPTION = "description";
-	
+	private static final String ID = "id";
+	private static final String FILLING_DATE = "filling_date";
+	private static final String APPLICANT_ID = "applicant_id";
+	private static final String FACULTY_ID = "faculty_id";
+	private static final String STATUS_ID = "status_id";
+	private static final String DESCRIPTION = "description";
 	private static final String TABLE_NAME = "application";
-	
 	private static final String QUERY_FOR_DELETE = "DELETE FROM application WHERE id = ?";
 	private static final String QUERY_FOR_UPDATE_DESCRIPTION = "UPDATE application SET description = ? WHERE id = ?";
 	private static final String QUERY_FOR_INSERT = "INSERT INTO application(filling_date, applicant_id, faculty_id, status_id) VALUES (?,?,?,?)";
@@ -33,6 +34,8 @@ public class ApplicationDao implements IApplicationDao {
 	private static final String QUERY_FOR_FIND_BY_FACULTY_ID = "SLECT * FROM application WHERE faculty_id = ";
 	private static final String QUERY_FOR_FIND_BY_STATUS_ID = "SLECT * FROM application WHERE status_id = ";
 	
+	private static final Logger LOGGER = LogManager.getLogger(ApplicationDao.class);
+	
 	@Override
 	public void delete(int id) {
 		try(Connection connection = Connector.getConnection();
@@ -40,7 +43,7 @@ public class ApplicationDao implements IApplicationDao {
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error deleteing applciation", exception);
 		}
 	}
 
@@ -50,7 +53,7 @@ public class ApplicationDao implements IApplicationDao {
 				PreparedStatement statement = connection.prepareStatement(getQueryForUpdate(changes, criterions));) {
 			statement.executeUpdate();
 		} catch(SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating application", exception);
 		}
 	}
 	
@@ -60,7 +63,7 @@ public class ApplicationDao implements IApplicationDao {
 				PreparedStatement statement = connection.prepareStatement(getQueryForNotEqualUpdate(field, newValue, criterion));) {
 			statement.executeUpdate();
 		} catch(SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating application", exception);
 		}
 	}
 	
@@ -72,7 +75,7 @@ public class ApplicationDao implements IApplicationDao {
 			statement.setInt(2, id);
 			statement.executeUpdate();
 		} catch(SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error updating application's description", exception);
 		}
 	}
 	
@@ -86,7 +89,7 @@ public class ApplicationDao implements IApplicationDao {
 			statement.setInt(4, newApplication.getStatusId());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error inserting into table ", exception);
 		}
 	}
 
@@ -101,7 +104,7 @@ public class ApplicationDao implements IApplicationDao {
 				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table", exception);
 		}
 		
 		return applications;
@@ -118,7 +121,7 @@ public class ApplicationDao implements IApplicationDao {
 				currentApplication = setApplication(result);
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by id", exception);
 		}
 		
 		return currentApplication;
@@ -135,7 +138,7 @@ public class ApplicationDao implements IApplicationDao {
 				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by applicant id", exception);
 		}
 		
 		return applications;
@@ -152,7 +155,7 @@ public class ApplicationDao implements IApplicationDao {
 				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by faculty id", exception);
 		}
 		
 		return applications;
@@ -169,7 +172,7 @@ public class ApplicationDao implements IApplicationDao {
 				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error selecting from table by status id", exception);
 		}
 		
 		return applications;
@@ -185,7 +188,7 @@ public class ApplicationDao implements IApplicationDao {
 				applications.add(setApplication(result));
 			}
 		} catch (SQLException exception) {
-			exception.printStackTrace();
+			LOGGER.error("Error custom selecting from table", exception);
 		}
 		
 		return applications;

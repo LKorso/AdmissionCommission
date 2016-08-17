@@ -8,18 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.admissioncommission.command.ICommand;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LogManager.getFormatterLogger(Controller.class);
        
     public Controller() {
-        super();
     }
 
     protected void doRequest(HttpServletRequest request, HttpServletResponse response) {
     	String page = null;
-
     	try{
     		ICommand command = ControllerHelper.getHelper().getCommand(request);
     		page = command.render(request, response);

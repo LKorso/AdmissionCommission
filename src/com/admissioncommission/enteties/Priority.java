@@ -1,6 +1,9 @@
 package com.admissioncommission.enteties;
 
-public class Priority {
+import java.io.Serializable;
+
+public class Priority implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private int priority;
 	

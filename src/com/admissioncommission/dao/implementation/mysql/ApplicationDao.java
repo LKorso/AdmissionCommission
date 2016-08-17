@@ -25,9 +25,10 @@ public class ApplicationDao implements IApplicationDao {
 	private static final String STATUS_ID = "status_id";
 	private static final String DESCRIPTION = "description";
 	private static final String TABLE_NAME = "application";
+	private static final String PRIORITY_ID = "priority_id";
 	private static final String QUERY_FOR_DELETE = "DELETE FROM application WHERE id = ?";
 	private static final String QUERY_FOR_UPDATE_DESCRIPTION = "UPDATE application SET description = ? WHERE id = ?";
-	private static final String QUERY_FOR_INSERT = "INSERT INTO application(filling_date, applicant_id, faculty_id, status_id) VALUES (?,?,?,?)";
+	private static final String QUERY_FOR_INSERT = "INSERT INTO application(filling_date, applicant_id, faculty_id, status_id, priority_id) VALUES (?,?,?,?,?)";
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM application";
 	private static final String QUERY_FOR_FIND_BY_ID = "SLECT * FROM application WHERE id = ";
 	private static final String QUERY_FOR_FIND_BY_APPLICANT_ID = "SLECT * FROM application WHERE applicant_id = ";
@@ -87,6 +88,7 @@ public class ApplicationDao implements IApplicationDao {
 			statement.setInt(2, newApplication.getApplicantId());
 			statement.setInt(3, newApplication.getFacultyId());
 			statement.setInt(4, newApplication.getStatusId());
+			statement.setInt(5, newApplication.getPriorityId());
 			statement.executeUpdate();
 		} catch (SQLException exception) {
 			LOGGER.error("Error inserting into table ", exception);
@@ -203,6 +205,7 @@ public class ApplicationDao implements IApplicationDao {
 		application.setFacultyId(result.getInt(FACULTY_ID));
 		application.setStatusId(result.getInt(STATUS_ID));
 		application.setDescription(result.getString(DESCRIPTION));
+		application.setPriorityId(result.getInt(PRIORITY_ID));
 		
 		return application;
 	}

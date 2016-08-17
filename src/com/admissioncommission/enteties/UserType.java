@@ -1,6 +1,9 @@
 package com.admissioncommission.enteties;
 
-public class UserType {
+import java.io.Serializable;
+
+public class UserType implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String type;
 	

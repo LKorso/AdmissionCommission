@@ -1,26 +1,30 @@
 package com.admissioncommission.enteties;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Application {
+public class Application implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private Date date;
 	private int applicantId;
 	private int facultyId;
 	private int statusId;
+	private int priorityId;
 	private String description;
 	
 	public Application() {
 	}
 
-	public Application(int id, Date date, int applicantId, int facultyId, int statusId, String descripshion) {
-		super();
+	public Application(int id, Date date, int applicantId, int facultyId, int statusId, int priorityId,
+			String description) {
 		this.id = id;
 		this.date = date;
 		this.applicantId = applicantId;
 		this.facultyId = facultyId;
 		this.statusId = statusId;
-		this.description = descripshion;
+		this.priorityId = priorityId;
+		this.description = description;
 	}
 
 	public int getId() {
@@ -71,6 +75,14 @@ public class Application {
 		this.description = description;
 	}
 
+	public int getPriorityId() {
+		return priorityId;
+	}
+
+	public void setPriorityId(int priorityId) {
+		this.priorityId = priorityId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -85,6 +97,8 @@ public class Application {
 		builder.append(facultyId);
 		builder.append("\nstatus id: ");
 		builder.append(statusId);
+		builder.append("\npriority id: ");
+		builder.append(priorityId);
 		builder.append("\ndescription: ");
 		builder.append(description);
 		
@@ -100,6 +114,7 @@ public class Application {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + facultyId;
 		result = prime * result + id;
+		result = prime * result + priorityId;
 		result = prime * result + statusId;
 		return result;
 	}
@@ -128,6 +143,8 @@ public class Application {
 		if (facultyId != other.facultyId)
 			return false;
 		if (id != other.id)
+			return false;
+		if (priorityId != other.priorityId)
 			return false;
 		if (statusId != other.statusId)
 			return false;

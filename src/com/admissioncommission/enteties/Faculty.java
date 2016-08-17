@@ -1,6 +1,9 @@
 package com.admissioncommission.enteties;
 
-public class Faculty {
+import java.io.Serializable;
+
+public class Faculty implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private int studentsNumber;

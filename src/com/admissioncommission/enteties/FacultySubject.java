@@ -1,6 +1,9 @@
 package com.admissioncommission.enteties;
 
-public class FacultySubject {
+import java.io.Serializable;
+
+public class FacultySubject implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int facultyId;
 	private int subjectId;
 	private double minMark;

@@ -1,6 +1,9 @@
 package com.admissioncommission.enteties;
 
-public class ApplicationStatus {
+import java.io.Serializable;
+
+public class ApplicationStatus implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String status;
 	

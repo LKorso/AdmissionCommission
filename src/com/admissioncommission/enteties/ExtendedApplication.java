@@ -1,8 +1,10 @@
 package com.admissioncommission.enteties;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class ExtendedApplication {
+public class ExtendedApplication implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int userId;
 	private int facultyId;
 	private int statusId;

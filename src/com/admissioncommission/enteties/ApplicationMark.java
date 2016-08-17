@@ -1,6 +1,9 @@
 package com.admissioncommission.enteties;
 
-public class ApplicationMark {
+import java.io.Serializable;
+
+public class ApplicationMark implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int applicationId;
 	private int markId;
 	

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
@@ -34,7 +33,6 @@ public class CustomSelectTag extends SimpleTagSupport{
 	@Override
 	public void doTag() throws JspException {
 		PageContext pageContext = (PageContext) getJspContext();
-	    JspWriter out = pageContext.getOut();
 		try {
 			pageContext.getOut().write(getSelectTag());
 		} catch (IOException e) {

@@ -1,41 +1,29 @@
 package com.admissioncommission.connection;
 
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.tomcat.jdbc.pool.DataSource;
 
 import java.sql.Connection;
 
 public class Connector {
-	private static final String RESOURCE_FILE = "com.admissioncommission.connection.database";
-	private static ResourceBundle property;
-	private static String url;
-	private static String user;
-	private static String pass; 
-	private static Connection connection;
 	
 	private static final Logger LOGGER = LogManager.getLogger(Connector.class);
 	
 	public static Connection getConnection() throws SQLException {
-		try{
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (ClassNotFoundException exception){
-			LOGGER.error("Error getting connection", exception);
-		} catch (InstantiationException exception) {
-			LOGGER.error("Error getting connection", exception);
-		} catch (IllegalAccessException exception) {
-			LOGGER.error("Error getting connection", exception);
+		DataSource dataSource = null;
+		try {
+			Context context = new InitialContext();
+			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/connection");
+		} catch (NamingException exception) {
+			LOGGER.error("Error getting data source", exception);
 		}
-		
-		property = ResourceBundle.getBundle(RESOURCE_FILE);
-		url = property.getString("url");
-		user = property.getString("user");
-		pass  = property.getString("password");
-		connection = (Connection) DriverManager.getConnection(url, user, pass);
-		
-		return connection;
+		return dataSource.getConnection();
 	}
 }

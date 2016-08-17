@@ -90,7 +90,6 @@ public class ApplicantChangeInformationPageLoader implements IPageLoader {
 	}
 	
 	private void setMonthOfBirth() {
-		System.out.print(currentUser);
 		monthOfBirth = currentUser.getDateOfBirth().toString().substring(5, 7);
 	}
 

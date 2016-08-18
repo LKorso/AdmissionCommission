@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>AdmissionCommission</display-name>
+   <filter>
+    <filter-name>SetCharacterEncodingFilter</filter-name>
+    <filter-class>com.admissioncommission.filter.SetCharacterEncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SetCharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
   <welcome-file-list>
     <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
   </welcome-file-list>
@@ -60,6 +70,18 @@
     <servlet-name>error</servlet-name>
     <url-pattern>/error</url-pattern>
   </servlet-mapping>
+  <error-page>
+	    <error-code>404</error-code>
+	    <location>/error</location>
+	</error-page>
+	<error-page>
+	    <error-code>403</error-code>
+	    <location>/error</location>
+	</error-page>
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/error</location>
+	</error-page>
   <servlet>
     <servlet-name>faculty</servlet-name>
     <jsp-file>/WEB-INF/jsp/faculty.jsp</jsp-file>
@@ -145,6 +167,16 @@
     <filter-name>StudentAccessFilter</filter-name>
     <url-pattern>/student</url-pattern>
     <url-pattern>/changeStudentInformation</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <filter>
+    <filter-name>ValidationFilter</filter-name>
+    <filter-class>com.admissioncommission.filter.ValidationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ValidationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>

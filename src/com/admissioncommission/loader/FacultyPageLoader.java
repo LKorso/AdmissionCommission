@@ -11,8 +11,11 @@ import javax.servlet.http.HttpSession;
 import com.admissioncommission.dao.creators.Factory;
 import com.admissioncommission.dao.creators.IDaoFactory;
 import com.admissioncommission.enteties.ApplicantMark;
+import com.admissioncommission.enteties.Application;
+import com.admissioncommission.enteties.ExtendedApplication;
 import com.admissioncommission.enteties.Faculty;
 import com.admissioncommission.enteties.FacultySubject;
+import com.admissioncommission.enteties.Priority;
 import com.admissioncommission.enteties.Subject;
 import com.admissioncommission.enteties.User;
 
@@ -28,6 +31,7 @@ public class FacultyPageLoader implements IPageLoader {
 	private HashMap<Integer, ApplicantMark> marks = new HashMap<>();
 	private HashMap<Integer, FacultySubject> minMarks = new HashMap<>();
 	private List<ApplicantMark> applicantMarks = new ArrayList<>();
+	private List<Priority> vacantPriorities = new ArrayList<>();
 	private ApplicantMark certificate;
 	
 	private static final String ATRIBUTE_FACULTY = "faculty";
@@ -37,6 +41,7 @@ public class FacultyPageLoader implements IPageLoader {
 	private static final String ATRIBUTE_CERTIFICATE = "certificate";
 	private static final String ATRIBUTE_LOW_RATING = "low_rating";
 	private static final String ATRIBUTE_MIN_RATING = "min_marks";
+	private static final String ATRIBUTE_PRIORITIES = "priorities";
 	
 	private static int certificateId;
 	
@@ -46,24 +51,26 @@ public class FacultyPageLoader implements IPageLoader {
 		this.request = request;
 		this.response = response;
 		session = request.getSession();
-		faculty = loadFaculty();
-		facultySubjects.addAll(loadFacultySubjects());
+		faculty = getFaculty();
+		facultySubjects.addAll(getFacultySubjects());
 		applicantMarks.addAll((List<ApplicantMark>) session.getAttribute("marks"));
 		certificateId = daoFactory.getSubjectDao().findByName("Certificate").getId();
-		certificate = loadCertificate();
+		certificate = getCertificate();
+		setVacantPriorities();
 	}
 	
 	
 	@Override
 	public void setAtributes() {
 		session.setAttribute(ATRIBUTE_FACULTY, faculty);
-		loadSubjectsAndMarks();
+		setSubjectsAndMarks();
 		session.setAttribute(ATRIBUTE_SUBJECTS, subjects);
 		session.setAttribute(ATRIBUTE_CURRENT_MARKS, marks);
 		session.setAttribute(ATRIBUTE_CERTIFICATE, certificate);
 		session.setAttribute(ATRIBUTE_MIN_RATING, minMarks);
 		session.setAttribute(ATRIBUTE_MISSING_MARKS, arentMarksCorrect());
 		session.setAttribute(ATRIBUTE_LOW_RATING, whetherntEnoughPoints());
+		session.setAttribute(ATRIBUTE_PRIORITIES, vacantPriorities);
 	}
 	
 	private boolean whetherntEnoughPoints(){
@@ -85,23 +92,38 @@ public class FacultyPageLoader implements IPageLoader {
 		return false;
 	}
 	
-	private List<FacultySubject> loadFacultySubjects(){
-		return daoFactory.getFacultySubjectDao().findByFacultyId(faculty.getId());
-	}
-	
-	private Faculty loadFaculty(){
-		return daoFactory.getFacultyDao().findById(Integer.parseInt(request.getParameter("faculty_id")));
-	}
-	
-	private void loadSubjectsAndMarks(){
-		for(FacultySubject subject : facultySubjects){
-			subjects.add(daoFactory.getSubjectDao().findById(subject.getSubjectId()));
-			minMarks.put(subject.getSubjectId(), subject);
-			loadMark(subject);
+	private void setVacantPriorities(){
+		for(Priority priority : daoFactory.getPriorityDao().selectAll()){
+			boolean additionalParameter = true;
+			for(Application application : daoFactory.getApplicationDao().findByApplicantId(currentUser.getId())){
+				if(priority.getId() == application.getPriorityId()){
+					additionalParameter = false;
+					break;
+				}
+			}
+			if(additionalParameter){
+				vacantPriorities.add(priority);
+			}
 		}
 	}
 	
-	private void loadMark(FacultySubject subject){
+	private List<FacultySubject> getFacultySubjects(){
+		return daoFactory.getFacultySubjectDao().findByFacultyId(faculty.getId());
+	}
+	
+	private Faculty getFaculty(){
+		return daoFactory.getFacultyDao().findById(Integer.parseInt(request.getParameter("faculty_id")));
+	}
+	
+	private void setSubjectsAndMarks(){
+		for(FacultySubject subject : facultySubjects){
+			subjects.add(daoFactory.getSubjectDao().findById(subject.getSubjectId()));
+			minMarks.put(subject.getSubjectId(), subject);
+			setMark(subject);
+		}
+	}
+	
+	private void setMark(FacultySubject subject){
 		ApplicantMark currentMark = null;
 		for(ApplicantMark mark : applicantMarks){
 			if(mark.getSubjectId() == subject.getSubjectId()){
@@ -111,7 +133,7 @@ public class FacultyPageLoader implements IPageLoader {
 		marks.put(subject.getSubjectId(), currentMark);
 	}
 	
-	private ApplicantMark loadCertificate(){
+	private ApplicantMark getCertificate(){
 		return applicantMarks.stream().filter(mark -> mark.getSubjectId() == certificateId).findFirst().get();
 	}
 }

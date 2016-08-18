@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="/WEB-INF/myTagLib.tld" prefix="mytag" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,6 +69,18 @@
 	</blockquote>
 </div> 
 </div> 
+<div class="row">
+	<div class="col-xs-8">
+		<p class="descripted_select">${content.getString("priority_description")}</p>
+	</div>
+	<div class="md-form col-xs-4">
+		<select class="form-control" id="priority_select" name="priority_id">
+	    	<c:forEach var="priority" items="${priorities}">
+	    		<option value="${priority.getId()}">${priority.getPriority()}</option>
+	    	</c:forEach>
+		</select>
+	</div>
+</div>
 <c:if test="${!(missing_marks || low_rating)}">
 <div class="row">
 	<button class="btn btn-success btn-lg" name="applay" value="applay">${content.getString("applay")}</button>

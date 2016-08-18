@@ -69,29 +69,27 @@ public class ApplicantPageLoader implements IPageLoader{
 	public void setAtributes(){
 		load();
 		HttpSession session = request.getSession(true);
-		if(request.getParameter("remove") == null){
-			if(session.getAttribute("reload") != null &&
-					session.getAttribute("reload").equals("TRUE")){
-				reloadUser();
-				session.setAttribute(ATRIBUTE_USER, currentUser);
-			}
-			session.setAttribute(ATRIBUTE_MARKS, applicantMarks);
-			session.setAttribute(ATRIBUTE_SUBJECTS, getSubjects(applicantMarks));
-			if(numberOfApplications < MAX_APPLICATIONS_NUMBER){
-				session.setAttribute(ATRIBUTE_FACULTIES, facultyDao.selectAll());
-			}
-			if(allApplications.isEmpty()){
-				session.setAttribute(ATRIBUTE_APPLICATION_STATUS, true);
-			} else {
-				session.setAttribute(ATRIBUTE_APPLICATION_STATUS, false);
-			}
-			if(passedApplications.size() > 0){
-				session.setAttribute(ATRIBUTE_PASSED_APPLICATIONS, passedApplications);
-			} else {
-				session.removeAttribute(ATRIBUTE_PASSED_APPLICATIONS);
-			}
-			session.setAttribute(ATRIBUTE_RATING, ratings);
+		if(session.getAttribute("reload") != null &&
+				session.getAttribute("reload").equals("TRUE")){
+			reloadUser();
+			session.setAttribute(ATRIBUTE_USER, currentUser);
 		}
+		session.setAttribute(ATRIBUTE_MARKS, applicantMarks);
+		session.setAttribute(ATRIBUTE_SUBJECTS, getSubjects(applicantMarks));
+		if(numberOfApplications < MAX_APPLICATIONS_NUMBER){
+			session.setAttribute(ATRIBUTE_FACULTIES, getVacantFaculties());
+		}
+		if(allApplications.isEmpty()){
+			session.setAttribute(ATRIBUTE_APPLICATION_STATUS, true);
+		} else {
+			session.setAttribute(ATRIBUTE_APPLICATION_STATUS, false);
+		}
+		if(passedApplications.size() > 0){
+			session.setAttribute(ATRIBUTE_PASSED_APPLICATIONS, passedApplications);
+		} else {
+			session.removeAttribute(ATRIBUTE_PASSED_APPLICATIONS);
+		}
+		session.setAttribute(ATRIBUTE_RATING, ratings);
 		if(rejectedApplications.size() > 0){
 			session.setAttribute(ATRIBUTE_REJECTED_APPLICATIONS, rejectedApplications);
 		} else {
@@ -113,6 +111,23 @@ public class ApplicantPageLoader implements IPageLoader{
 		setRejectedApplications();
 		setUnreviewedApplications();
 		setRatings();
+	}
+	
+	private List<Faculty> getVacantFaculties(){
+		List<Faculty> faculties = new ArrayList<>();
+		for(Faculty faculty : facultyDao.selectAll()){
+			boolean additionalParameter = true;
+			for(ExtendedApplication application : allApplications){
+				if(faculty.getId() == application.getFacultyId()){
+					additionalParameter = false;
+					break;
+				}
+			}
+			if(additionalParameter){
+				faculties.add(faculty);
+			}
+		}
+		return faculties;
 	}
 	
 	private void setMarks(){

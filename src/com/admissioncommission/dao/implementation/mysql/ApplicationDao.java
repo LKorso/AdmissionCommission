@@ -31,9 +31,9 @@ public class ApplicationDao implements IApplicationDao {
 	private static final String QUERY_FOR_INSERT = "INSERT INTO application(filling_date, applicant_id, faculty_id, status_id, priority_id) VALUES (?,?,?,?,?)";
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM application";
 	private static final String QUERY_FOR_FIND_BY_ID = "SLECT * FROM application WHERE id = ";
-	private static final String QUERY_FOR_FIND_BY_APPLICANT_ID = "SLECT * FROM application WHERE applicant_id = ";
-	private static final String QUERY_FOR_FIND_BY_FACULTY_ID = "SLECT * FROM application WHERE faculty_id = ";
-	private static final String QUERY_FOR_FIND_BY_STATUS_ID = "SLECT * FROM application WHERE status_id = ";
+	private static final String QUERY_FOR_FIND_BY_APPLICANT_ID = "SELECT * FROM application WHERE applicant_id = ";
+	private static final String QUERY_FOR_FIND_BY_FACULTY_ID = "SELECT * FROM application WHERE faculty_id = ";
+	private static final String QUERY_FOR_FIND_BY_STATUS_ID = "SELECT * FROM application WHERE status_id = ";
 	
 	private static final Logger LOGGER = LogManager.getLogger(ApplicationDao.class);
 	

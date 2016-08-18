@@ -22,9 +22,11 @@ public class ApplicationProcessor {
 	private User currentUser;
 	private Faculty currentFaculty;
 	private HttpSession session;
+	private HttpServletRequest request;
 	private IDaoFactory daoFactory;
 	
 	public ApplicationProcessor(HttpServletRequest request){
+		this.request = request;
 		session = request.getSession();
 		currentUser = (User) session.getAttribute("user");
 		daoFactory = Factory.createDaoFactory(Factory.MYSQL);
@@ -68,6 +70,7 @@ public class ApplicationProcessor {
 		newApplication.setDate(Date.valueOf(getCurrentDate()));
 		newApplication.setFacultyId(currentFaculty.getId());
 		newApplication.setStatusId(daoFactory.getApplicationStatusDao().findByStatus("Unreviewed").getId());
+		newApplication.setPriorityId(Integer.parseInt(request.getParameter("priority_id")));
 		daoFactory.getApplicationDao().insert(newApplication);
 	}
 	

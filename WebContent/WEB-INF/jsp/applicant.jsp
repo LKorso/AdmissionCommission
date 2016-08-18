@@ -32,44 +32,49 @@
 	</div>
 </header>
 <body class="body">
+<div class="container">
 	<form action="Controller" method="POST">
 		<input type="hidden" name="command" value="applicant" />
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-3">
-				<p>${user.getLastName()}</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${user.getFirstName()}</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${content.getString("email")}:</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${user.getEmail()}</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6">
-				<p>${user.getDateOfBirth()}</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${content.getString("phone")}:</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${user.getPhone()}</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6">
-				<p>${user.getSex()}</p>
-			</div>
+	
+		<div class="row col-xs-6">
+			<div class="row">
 				<div class="col-xs-6">
-					<button name="changeInformation" value="change">
-						${content.getString("change_information")}
-					</button>
+					<p class="main-info">${user.getLastName()}</p>
 				</div>
+				<div class="col-xs-6">
+					<p class="main-info">${user.getFirstName()}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<p class="main-info">${user.getSex()}</p>
+				</div>
+				<div class="col-xs-6">
+					<p class="main-info">${user.getDateOfBirth()}</p>
+				</div>
+			</div>
 		</div>
+		<div class="row col-xs-6">
+			<div class="row">
+				<div class="col-xs-6">
+					<p class="main-info">${content.getString("email")}:</p>
+				</div>
+				<div class="col-xs-6">
+					<p class="main-info">${user.getEmail()}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<p class="main-info">${content.getString("phone")}:</p>
+				</div>
+				<div class="col-xs-6">
+					<p class="main-info">${user.getPhone()}</p>
+				</div>
+			</div>
+		</div>
+			<div class="row btn_row">
+				<button class="btn col-xs-6" name="changeInformation" value="change">${content.getString("change_information")}</button>
+			</div>
 		<div class="row">
 			<h3>${content.getString("marks")}: </h3>
 		</div>
@@ -85,17 +90,21 @@
 					</tr>
 				</c:forEach>
 		</table>
+		<h3>${content.getString("applicant.newapplication_description")}</h3>
 		<div class="row">
-			<h3 class="col-xs-4">${content.getString("applicant.newapplication_description")}</h3>
-			<select class="mdb-select col-xs-4" name="faculty_id">
-    			<option value="" disabled selected>${content.getString("applicant.choose_faculty")}</option>
-    			<c:forEach var="faculty" items="${faculties}">
-    				<option value="${faculty.getId()}">${faculty.getName()}</option>
-    			</c:forEach>
-			</select>
-			<button name="faculty" value="faculty" class="col-xs-2 btn btn-default">
-				${content.getString("choose")}
-			</button>
+			<div class="md-form col-xs-8">
+				<select class="form-control" id="faculty_select" name="faculty_id">
+	    			<option value="" disabled selected>${content.getString("applicant.choose_faculty")}</option>
+	    			<c:forEach var="faculty" items="${faculties}">
+	    				<option value="${faculty.getId()}">${faculty.getName()}</option>
+	    			</c:forEach>
+				</select>
+			</div>
+			<div>
+				<button name="faculty" value="faculty" class="col-xs-4 btn">
+					${content.getString("choose")}
+				</button>
+			</div>
 		</div>
 		<c:if test="${!applicationStatus}">
 			<div class="row">
@@ -163,8 +172,8 @@
 				</c:forEach>
 			</c:if>
 		</c:if>
-	</div>
 	</form>
+</div>
 	
 	<!-- SCRIPTS -->
 

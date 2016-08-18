@@ -36,60 +36,69 @@
 	<div class="container">
 	<form action="Controller" method="POST">
 		<input type="hidden" name="command" value="changeInformation" />
+			<h4>${content.getString("change.description")}</h4>
 			<div class="row">
-				<h4>${content.getString("change.description")}: </h4>
+				<div class="col-xs-6 md-form">
+					<input class="col-xs-2 form-control validate"  type="text" name="lastName" id="form1" value="${user.getLastName()}" required pattern="^[а-яА-ЯёЁіІїЇєЄa-zA-Z]+$"></input>
+					<label class="active" for="form1">${content.getString("last_name")}</label>
+				</div>
+				<div class="col-xs-6 md-form">
+					<input class="col-xs-2 form-control validate" type="text" name="firstName" id="form2" value="${user.getFirstName()}" required pattern="^[а-яА-ЯёЁіІїЇєЄa-zA-Z]+$"></input>
+					<label class="active" for="form2">${content.getString("frist_name")}</label>
+				</div>
 			</div>
+			<h4>${content.getString("date_of_birth")}: </h4>
 			<div class="row">
-				<p class="col-xs-2">${content.getString("last_name")}: </p>
-				<input class="col-xs-2" type="text" name="last_name" value="${user.getLastName()}"></input>
-			</div>
-			<div class="row">
-				<p class="col-xs-2">${content.getString("frist_name")}: </p>
-				<input class="col-xs-2" type="text" name="first_name" value="${user.getFirstName()}"></input>
-			</div>
-			<div class="row">
-				<p class="col-xs-2">${content.getString("sex")}: </p>
-				<div class="col-xs-2">
-					<mytag:customselect values="${sex}" selectClass="form-control"
-						criterionForSelected="${user.getSex()}" selectName="sex"/>
+				<div class="col-xs-4 md-form">
+					<input class="col-xs-1 form-control validate" value="${yearOfBirth}" type="number" min="1900" max="2016" step="1" name="year" id="form3" required></input>
+					<label class="active" for="form3">${content.getString("year")}</label>
+				</div>
+				<div class="col-xs-4 descripted_select">
+					<p class="description">${content.getString("month")}</p>
+					<div>
+						<mytag:customselect values="${months}" criterionForSelected="${monthOfBirth}" selectClass="form-control" selectName="month"/>
+					</div>
+				</div>
+				<div class="col-xs-4  md-form">
+					<input class="col-xs-2 form-control validate"  value="${dayOfBirth}" type="number" min="1" max="31" value="1" name="day" id="form4" required></input>
+					<label class="active" for="form4">${content.getString("day")}</label>
 				</div>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">${content.getString("date_of_birth")}: </p>
-				<p class="col-xs-1">${content.getString("year")}</p>
-				<input class="col-xs-1" type="text" name="year" value="${yearOfBirth}"></input>
-				<p class="col-xs-1">${content.getString("month")}</p>
-				<div class="col-xs-2">
-					<mytag:customselect values="${months}" selectClass="form-control"
-						criterionForSelected="${monthOfBirth}" selectName="month"/>
+				<div class="col-xs-4 descripted_select">
+					<p class="description">${content.getString("sex")}</p>
+					<div>
+						<mytag:customselect values="${sex}" criterionForSelected="${user.getSex()}" selectClass="form-control" selectName="sex"/>
+					</div>
 				</div>
-					<p class="col-xs-1" >${content.getString("day")}</p>
-					<input class="col-xs-2" type="text" name="day" value="${dayOfBirth}"></input>
+				<div class="md-form col-xs-4">
+					<input class="col-xs-2 form-control validate" value="${user.getPhone()}" type="text" name="phone" id="form5" required pattern="^((8|\+7|\+38)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"></input>
+					<label class="active" for="form5">${content.getString("phone")}</label>
+				</div>
+				<div class="md-form col-xs-4">
+					<input class="col-xs-2 form-control validate" value="${user.getEmail()}" type="email" name="email" id="form6" required></input>
+					<label class="active" for="form6">${content.getString("email")}</label>
+				</div>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">${content.getString("email")}: </p>
-				<input class="col-xs-2" type="text" name="email" value="${user.getEmail()}"></input>
+				<div class="col-xs-6 md-form">
+					<input class="col-xs-2 form-control validate" type="password" name="password_one" id="form7"></input>
+					<label class="active" for="form7">${content.getString("password")}</label>
+				</div>
+				<div class="col-xs-6 md-form">
+					<input class="col-xs-2 form-control validate" type="password" name="password_two" id="form8"></input>
+					<label class="active" for="form8">${content.getString("repeat_password")}</label>
+				</div>
 			</div>
-			<div class="row">
-				<p class="col-xs-2">${content.getString("phone")}: </p>
-				<input class="col-xs-2" type="text" name="phone" value="${user.getPhone()}"></input>
-			</div>
-			<input type="hidden" name="command" value="changeStudent" />
-			<div class="row">
-				<button name="submit" value="change">${content.getString("submit")}</button>
+			<div class="row btn_row" >
+				<button name="submit" id="reg_submit_btn" class="btn col-xs-6">${content.getString("submit")}</button>
 			</div>
 			</form>
-			<div class="row">
-				<h3>${content.getString("marks")}: </h3>
-			</div>
+			<h3>${content.getString("marks")}: </h3>
 			<table class="table">
 				<tr>
 					<th>${content.getString("applicant.subject")}</th>
 					<th>${content.getString("applicant.mark")}</th>
-					<th>${content.getString("change")}</th>
-					<c:if test="${applicationStatus}">
-						<th>${content.getString("delete")}</th>
-					</c:if>
 				</tr>
 					<c:forEach var="mark" items="${marks}">
 							<tr>
@@ -102,28 +111,33 @@
 								<c:if test="${!applicationStatus}">
 									<td>${subjects.get(mark.getSubjectId())}</td>
 								</c:if>
-								<td><input type="text" name="mark" value="${mark.getMark()}"></input></td>
-								<td><button name="changeMarkId" value="${mark.getId()}">${content.getString("change")}</button></td>
+								<c:if test="${!applicationStatus}">
+									<td>${mark.getMark()}</td>
+								</c:if>
 								<c:if test="${applicationStatus}">
-									<td><button name="deleteMark" value="${mark.getId()}">${content.getString("delete")}</button></td>
+									<td><input type="text" name="mark" value="${mark.getMark()}" required pattern="(\d{3})+(\.\d{1,3})*"></input></td>
+									<td><button name="changeMarkId" value="${mark.getId()}" class="btn flat-btn">${content.getString("change")}</button></td>
+									<td><button name="deleteMark" value="${mark.getId()}" class="btn flat-btn">${content.getString("delete")}</button></td>
 								</c:if>
 							</form>
 							</tr>
 					</c:forEach>
 			</table>
-				<div class="row">
-					<h3>${content.getString("add_marks_description")}</h3>
-				</div>
-				<div class="row">
-					<form action="Controller" method="POST">
-						<input type="hidden" name="command" value="changeInformation" />
-						<div class="col-xs-5">
-							<mytag:customselect values="${vacant_subjects}" selectClass="form-control" selectName="subject"/>
+				<h3>${content.getString("add_marks_description")}</h3>
+				<form action="Controller" method="POST">
+					<input type="hidden" name="command" value="changeInformation" />
+					<div class="row">
+						<div class="md-form col-xs-4">
+							<mytag:customselect values="${vacant_subjects}" selectClass="form-control" selectId="subject_select" selectName="subject"/>
 						</div>
-						<input type="text" name="mark" value="" class="col-xs-4">
-						<button class="col-xs-3" name="addMark">${content.getString("add")}</button>
-					</form>
-				</div>
+						<div class="md-form col-xs-4">
+							<input type="text" name="mark" value="" placeholder="200.00" class="col-xs-6 form-control validate" required pattern="(\d{3})+(\.\d{1,3})*">
+						</div>
+						<div>
+							<button name="addMark" id="reg_submit_btn" class="btn col-xs-4">${content.getString("add")}</button>
+						</div>
+					</div>
+				</form>
 		</div>
 		
 	<!-- SCRIPTS -->

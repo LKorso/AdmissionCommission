@@ -82,6 +82,6 @@ public class AdministratorChangeInformationPageLoader implements IPageLoader {
 	private void setSex(){
 		sex = new ArrayList<>();
 		sex.add("M");
-		sex.add("W");
+		sex.add("F");
 	}
 }

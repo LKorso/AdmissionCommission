@@ -47,12 +47,12 @@
                     <form action="Controller" method="POST">
                         <input type="hidden" name="command" value="login" />
                         <div class="md-form">
-                             <input type="email" name="email" value="" id="form9" class="form-control validate" name="email">
-                             <label for="form9" data-error="wrong" data-success="right">${content.getString("email")}:</label>
+                             <input type="email" name="email" value="" id="form9" class="form-control validate" name="email" required>
+                             <label for="form9">${content.getString("email")}:</label>
                         </div>
                         <div class="md-form">
-                            <input type="password" name="password" value="" id="form10" class="form-control validate">
-                            <label for="form10" data-error="wrong" data-success="right">${content.getString("password")}:</label>
+                            <input type="password" name="password" value="" id="form10" class="form-control validate" required>
+                            <label for="form10">${content.getString("password")}:</label>
                         </div>   
                         <button name="signIn" value="signIn" class="btn">${content.getString("login.sign_in")}</button>
                     </form>

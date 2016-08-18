@@ -13,6 +13,7 @@ public class CustomSelectTag extends SimpleTagSupport{
 	private String selectClass;
 	private String criterionForSelected;
 	private String selectName;
+	private String selectId;
 	
 	public void setValues(List<String> values) {
 		this.values.addAll(values);
@@ -28,6 +29,10 @@ public class CustomSelectTag extends SimpleTagSupport{
 
 	public void setSelectName(String selectName) {
 		this.selectName = selectName;
+	}
+	
+	public void setSelectId(String selectId){
+		this.selectId = selectId;
 	}
 	
 	@Override
@@ -48,6 +53,8 @@ public class CustomSelectTag extends SimpleTagSupport{
 		tagBuilder.append(selectClass);
 		tagBuilder.append("\" name=\"");
 		tagBuilder.append(selectName);
+		tagBuilder.append("\" id=\"");
+		tagBuilder.append(selectId);
 		tagBuilder.append("\">");
 		
 		for(String value : values){

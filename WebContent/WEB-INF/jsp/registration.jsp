@@ -34,53 +34,61 @@
 	<div class="container">
 		<form action="Controller" method="POST">
 			<input type="hidden" name="command" value="registration" />
+			<h4>${content.getString("registration.description")}</h4>
 			<div class="row">
-				<h4>${content.getString("registration.description")}</h4>
+				<div class="col-xs-6 md-form">
+					<input class="col-xs-2 form-control validate" placeholder="Doe" type="text" name="lastName" id="form1" required pattern="^[а-яА-ЯёЁіІїЇєЄa-zA-Z]+$"></input>
+					<label class="active" for="form1">${content.getString("last_name")}</label>
+				</div>
+				<div class="col-xs-6 md-form">
+					<input class="col-xs-2 form-control validate" type="text" placeholder="John" name="firstName" id="form2" required pattern="^[а-яА-ЯёЁіІїЇєЄa-zA-Z]+$"></input>
+					<label class="active" for="form2">${content.getString("frist_name")}</label>
+				</div>
 			</div>
+			<h4>${content.getString("date_of_birth")}: </h4>
 			<div class="row">
-				<p class="col-xs-2">${content.getString("last_name")}: </p>
-				<input class="col-xs-2" type="text" name="lastName"></input>
-			</div>
-			<div class="row">
-				<p class="col-xs-2">${content.getString("frist_name")}: </p>
-				<input class="col-xs-2" type="text" name="firstName"></input>
-			</div>
-			<div class="row">
-				<p class="col-xs-2">${content.getString("sex")}: </p>
-				<div class="col-xs-2">
-					<mytag:customselect values="${sex}" selectClass="form-control" selectName="sex"/>
+				<div class="col-xs-4 md-form">
+					<input class="col-xs-1 form-control validate" placeholder="1999" type="number" min="1900" max="2016" step="1" name="year" id="form3" required></input>
+					<label class="active" for="form3">${content.getString("year")}</label>
+				</div>
+				<div class="col-xs-4 descripted_select">
+					<p class="description">${content.getString("month")}</p>
+					<div>
+						<mytag:customselect values="${months}" selectClass="form-control" selectName="month"/>
+					</div>
+				</div>
+				<div class="col-xs-4  md-form">
+					<input class="col-xs-2 form-control validate" placeholder="1" type="number" min="1" max="31" value="1" name="day" id="form4" required></input>
+					<label class="active" for="form4">${content.getString("day")}</label>
 				</div>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">${content.getString("date_of_birth")}: </p>
-				<p class="col-xs-1">${content.getString("year")}</p>
-				<input class="col-xs-1" type="text" name="year"></input>
-				<p class="col-xs-1">${content.getString("month")}</p>
-				<div class="col-xs-2">
-					<mytag:customselect values="${months}" selectClass="form-control" selectName="month"/>
+				<div class="col-xs-4 descripted_select">
+					<p class="description">${content.getString("sex")}</p>
+					<div>
+						<mytag:customselect values="${sex}" selectClass="form-control" selectName="sex"/>
+					</div>
 				</div>
-				<p class="col-xs-1">${content.getString("day")}</p>
-				<input class="col-xs-2" type="text" name="day"></input>
+				<div class="md-form col-xs-4">
+					<input class="col-xs-2 form-control validate" placeholder="+xx(xxx)xxx-xx-xx" type="text" name="phone" id="form5" required pattern="^((8|\+7|\+38)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"></input>
+					<label class="active" for="form5">${content.getString("phone")}</label>
+				</div>
+				<div class="md-form col-xs-4">
+					<input class="col-xs-2 form-control validate" placeholder="user@email.com" type="email" name="email" id="form6" required></input>
+					<label class="active" for="form6">${content.getString("email")}</label>
+				</div>
 			</div>
 			<div class="row">
-				<p class="col-xs-2">${content.getString("phone")}: </p>
-				<input class="col-xs-2" type="text" name="phone"></input>
+				<div class="col-xs-6 md-form">
+					<input class="col-xs-2 form-control validate" type="password" name="password_one" id="form7" required></input>
+					<label class="active" for="form7">${content.getString("password")}</label>
+				</div>
+				<div class="col-xs-6 md-form">
+					<input class="col-xs-2 form-control validate" type="password" name="password_two" id="form8" required></input>
+					<label class="active" for="form8">${content.getString("repeat_password")}</label>
+				</div>
 			</div>
-			<div class="row">
-				<p class="col-xs-2">${content.getString("email")}: </p>
-				<input class="col-xs-2" type="email" name="email"></input>
-			</div>
-			<div class="row">
-				<p class="col-xs-2">${content.getString("password")}: </p>
-				<input class="col-xs-2" type="password" name="password_one"></input>
-			</div>
-			<div class="row">
-				<p class="col-xs-2">${content.getString("repeat_password")}: </p>
-				<input class="col-xs-2" type="password" name="password_two"></input>
-			</div>
-			<div class="row">
-				<h4>${content.getString("marks")}: </h4>
-			</div>
+			<h4>${content.getString("marks")}: </h4>
 			<div class="row">
 				<div class="col-xs-4">
 					<mytag:customselect values="${subjects_list}" selectClass="form-control" selectName="subject_one"/>
@@ -93,16 +101,22 @@
 				</div>
 			</div>
 			<div class="row">
-				<input class="col-xs-4" type="text" name="mark_one"></input>
-				<input class="col-xs-4" type="text" name="mark_two"></input>
-				<input class="col-xs-4" type="text" name="mark_three"></input>
+				<div class="col-xs-4 md-form">
+					<input class="col-xs-4 form-control validate" placeholder="200.00" type="text" name="mark_one" required pattern="(\d{3})+(\.\d{1,3})*"></input>
+				</div>
+				<div class="col-xs-4 md-form">
+					<input class="col-xs-4 form-control validate" placeholder="200.00" type="text" name="mark_two" required pattern="(\d{3})+(\.\d{1,3})*"></input>
+				</div>
+				<div class="col-xs-4 md-form">
+					<input class="col-xs-4 form-control validate" placeholder="200.00" type="text" name="mark_three" required pattern="(\d{3})+(\.\d{1,3})*"></input>
+				</div>
 			</div>
 			<div class="row">
-				<p class="col-xs-3">${content.getString("certificate")}: </p>
-				<input class="col-xs-4" type="text" name="certificate"></input>
-			</div>
-			<div class="row">
-				<button name="submit" class="btn btn-primary">${content.getString("submit")}</button>
+				<div class="col-xs-8 md-form">
+					<input class="form-control validate" placeholder="200.00" type="text" name="certificate" id="form9" required pattern="(\d{3})+(\.\d{1,3})*"></input>
+					<label class="active" for="form9">${content.getString("certificate")}</label>
+				</div>
+				<button name="submit" id="reg_submit_btn" class="btn col-xs-4">${content.getString("submit")}</button>
 			</div>
 		</form>
 	</div>

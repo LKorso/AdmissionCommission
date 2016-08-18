@@ -24,51 +24,61 @@
 </head>
 <header>
 	<%@include file="header.jsp" %>
-		
-	<div class="container">
-		<div class="row">
-			<h3 class="col-xs-3">${content.getString("student")} ${content.getString("faculty")}: </h3>
-			<h3>${faculty}</h3>
-		</div>
-	</div>
 </header>
 <body class="body">
 	<div class="container">
-		<div class="row">
-			<div class="col-xs-3">
-				<p>${user.getLastName()}</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${user.getFirstName()}</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${content.getString("email")}:</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${user.getEmail()}</p>
+		<div class="card">
+			<div class="card-block">
+				<h3 class="card-title">${faculty}</h3>
 			</div>
 		</div>
-		<dir class="row">
-			<div class="col-xs-6">
-				<p>${user.getDateOfBirth()}</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${content.getString("phone")}:</p>
-			</div>
-			<div class="col-xs-3">
-				<p>${user.getPhone()}</p>
-			</div>
-		</dir>
-		<div class="row">
-			<div class="col-xs-6">
-				<p>${user.getSex()}</p>
-			</div>
-			<form action="Controller" method="POST">
-				<input type="hidden" name="command" value="student" />
-				<div class="col-xs-6">
-					<button>${content.getString("change_information")}</button>
+		<div class="card">
+			<div class="card-block">
+				<h3 class="card-title">${content.getString("student")}</h3>
+				<div class="row col-xs-6">
+					<div class="row">
+						<div class="col-xs-6">
+							<p class="main-info">${user.getLastName()}</p>
+						</div>
+						<div class="col-xs-6">
+							<p class="main-info">${user.getFirstName()}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<p class="main-info">${user.getSex()}</p>
+						</div>
+						<div class="col-xs-6">
+							<p class="main-info">${user.getDateOfBirth()}</p>
+						</div>
+					</div>
 				</div>
-			</form>
+				<div class="row col-xs-6">
+					<div class="row">
+						<div class="col-xs-6">
+							<p class="main-info">${content.getString("email")}:</p>
+						</div>
+						<div class="col-xs-6">
+							<p class="main-info">${user.getEmail()}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<p class="main-info">${content.getString("phone")}:</p>
+						</div>
+						<div class="col-xs-6">
+							<p class="main-info">${user.getPhone()}</p>
+						</div>
+					</div>
+				</div>
+				<form action="Controller" method="POST">
+					<input type="hidden" name="command" value="student" />
+					<div class="row btn_row">
+						<button class="btn col-xs-3">${content.getString("change_information")}</button>
+					</div>
+				</form>
+				</div>
+			</div>
 		</div>
 		
 	<!-- SCRIPTS -->

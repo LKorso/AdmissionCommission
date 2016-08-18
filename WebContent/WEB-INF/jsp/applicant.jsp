@@ -118,19 +118,21 @@
 				<div class="row">
 					<h4>${applications.get(0).getFaculty()}</h4>
 				</div>
-				<table class="table">
+				<table class="table numbered">
 					<tr>
 						<th>#</th>
 						<th>${content.getString("last_name")}</th>
 						<th>${content.getString("frist_name")}</th>
 						<th>${content.getString("applicant.average")}</th>
+						<th>${content.getString("priority")}</th>
 					</tr>
 						<c:forEach var="application" items="${applications}">
 							<tr>
-								<td>1</td>
+								<td class="counter"></td>
 								<td>${application.getLastName()}</td>
 								<td>${application.getFirstName()}</td>
-								<td>${rating.get(application.getApplicationId())}</td> 
+								<td>${application.getRating()}</td> 
+								<td>${application.getPriority()}</td>
 							</tr>
 						</c:forEach>
 				</table>

@@ -14,6 +14,7 @@ import com.admissioncommission.dao.IFacultyDao;
 import com.admissioncommission.dao.ISubjectDao;
 import com.admissioncommission.dao.creators.Factory;
 import com.admissioncommission.dao.creators.IDaoFactory;
+import com.admissioncommission.dao.creators.QueryBuilder;
 import com.admissioncommission.enteties.ApplicantMark;
 import com.admissioncommission.enteties.ApplicationMark;
 import com.admissioncommission.enteties.ExtendedApplication;
@@ -51,7 +52,9 @@ public class ApplicantPageLoader implements IPageLoader{
 	private static final String STATUS_REJECTED = "Rejected";
 	private static final String STATUS_UNACCEPTED = "Unaccepted";
 	
-	private long numberOfPassedApplications;
+	private static final int MAX_APPLICATIONS_NUMBER = 3;
+	
+	private int numberOfApplications;
 	
 	public ApplicantPageLoader(HttpServletRequest request, HttpServletResponse response){
 		this.currentUser = (User) request.getSession().getAttribute("user");
@@ -74,7 +77,7 @@ public class ApplicantPageLoader implements IPageLoader{
 			}
 			session.setAttribute(ATRIBUTE_MARKS, applicantMarks);
 			session.setAttribute(ATRIBUTE_SUBJECTS, getSubjects(applicantMarks));
-			if(numberOfPassedApplications < 3){
+			if(numberOfApplications < MAX_APPLICATIONS_NUMBER){
 				session.setAttribute(ATRIBUTE_FACULTIES, facultyDao.selectAll());
 			}
 			if(allApplications.isEmpty()){
@@ -102,9 +105,9 @@ public class ApplicantPageLoader implements IPageLoader{
 	}
 	
 	private void load(){
-		applicantMarks = getMarks();
+		setMarks();
 		setAllApplicantAplications();
-		numberOfPassedApplications = countCustomStatusApplications(STATUS_PASSED);
+		numberOfApplications = countApplications();
 		setSelectedFaculties();
 		setPassedApplications();
 		setRejectedApplications();
@@ -112,9 +115,8 @@ public class ApplicantPageLoader implements IPageLoader{
 		setRatings();
 	}
 	
-	private List<ApplicantMark> getMarks(){
-		IApplicantMarkDao applicantMarkDao = daoFactory.getApplicantMarkDao();
-		return applicantMarkDao.findByApplicantId(currentUser.getId());
+	private void setMarks(){
+		applicantMarks = daoFactory.getApplicantMarkDao().findByApplicantId(currentUser.getId());
 	}
 	
 	private HashMap<Integer, String> getSubjects(List<ApplicantMark> marks){
@@ -132,8 +134,8 @@ public class ApplicantPageLoader implements IPageLoader{
 		allApplications = applicationDao.findByCustomId(currentUser.getId());
 	}
 	
-	private long countCustomStatusApplications(String status){
-		return allApplications.stream().filter(application -> application.getStatus().equals(status)).count();
+	private int countApplications(){
+		return allApplications.size();
 	}
 	
 	private void setSelectedFaculties(){
@@ -150,7 +152,7 @@ public class ApplicantPageLoader implements IPageLoader{
 		for(Faculty faculty : selectedFaculties){
 			criterions.put("faculty_id", Integer.toString(faculty.getId()));
 			List<ExtendedApplication> currentApplications = new ArrayList<>();
-			currentApplications = applicationDao.customSelect(criterions);
+			currentApplications = applicationDao.customSelectSorted(criterions, QueryBuilder.ORDER_DESC);
 			if(!currentApplications.isEmpty()){
 				passedApplications.add(currentApplications);
 			}

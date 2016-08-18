@@ -245,3 +245,17 @@ th {
 .card-block .row{
 	margin-top: 0em;
 }
+
+.numbered {
+	counter-reset: row_counter;
+}
+
+.numbered .counter {
+	counter-increment: row_counter;
+}
+
+.numbered .counter:before{
+	content: counter(row_counter);
+	display: table-cell;
+  	vertical-align: middle;
+}

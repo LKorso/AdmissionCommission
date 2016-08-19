@@ -150,12 +150,12 @@
 					      	<div class="row">
 					      		<div class="col-xs-12"><h3>${content.getString("admin.application_descriptions")}:</h3></div>
 					      	</div>
-					      	<div class="row">
-					      		<textarea maxlength="500" rows="3" class="col-xs-8"></textarea>
-					      	</div>
-					      <div class="panel-footer">
-						      <form action="Controller" method="POST">
+					      	<form action="Controller" method="POST">
 								<input type="hidden" name="command" value="admin" />
+					      	<div class="row">
+					      		<textarea maxlength="500" rows="3" class="col-xs-8" name="description"></textarea>
+					      	</div>
+					      	<div class="panel-footer">
 						      	<div class="row">
 						      		<button class="col-md-2" name="submit" value="${applications.getApplicationId()}">
 						      			${content.getString("submit")}
@@ -164,8 +164,8 @@
 										${content.getString("cancel")}
 									</button>
 						      	</div>
-						      </form>
-					      </div>
+					      	</div>
+					      </form>
 					    </div>
 					  </div>
 					</div>
@@ -187,18 +187,50 @@
 					</div>
 				</div>
 			</div>
+			</form>
 			<div class="card">
 				<div class="card-block">
 				<div class="row">
 					<h3 class="col-xs-9">${content.getString("admin.enroll_students_description")}</h3>
-					<button class="col-xs-3 btn" name="enrollStudents" value="enrollStudents">
-							${content.getString("admin.enroll_students")}
-					</button>
+					<c:if test="${!unreviewedApplications.isEmpty()}">
+						<button class="col-xs-3 btn" name="enrollStudents" value="enrollStudents"  data-toggle="modal" data-target="#modal-1" >
+								${content.getString("admin.enroll_students")}
+						</button>
+					</c:if>
+					<c:if test="${unreviewedApplications.isEmpty()}">
+						<form action="Controller" method="POST">
+							<input type="hidden" name="command" value="admin"/>
+							<button class="col-xs-3 btn" name="enrollStudents" value="enrollStudents">
+									${content.getString("admin.enroll_students")}
+							</button>
+						</form>
+					</c:if>
 				</div>
 			</div>
 		</div>
-		</form>
 	</div>
+	
+<!--Modal-->
+<div class="modal" id="modal-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="card">
+				<div class="card-header danger-color-dark white-text">
+					${content.getString("admin.unreviewed.header")}
+				</div>
+				<div class="card-block">
+					<p class="card-text">${content.getString("admin.unreviewed.message")}</p>
+					<button class="btn btn-danger-outline waves-effect" data-dismiss="modal"">
+						${content.getString("add")}
+					</button>
+				</div>
+			</div>
+		</div> 
+	</div>
+</div>
+</form>
+
+<!--/Modal-->
 	
 	<!-- SCRIPTS -->
 

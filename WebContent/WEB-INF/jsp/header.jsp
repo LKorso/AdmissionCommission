@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    	<form action="Controller" method="POST">
     	<input type="hidden" name="command" value="header" />
         <nav class="navbar navbar-dark navbar-fixed-top" id="navbar">
@@ -20,7 +21,13 @@
                         <button name="home" value=""><a class="nav-link">${content.getString("header.home")}</a></button>
                     </li>
                     <li class="nav-item active">
-                        <button name="log_out" value=""><a class="nav-link">${content.getString("header.log_out")}</a></button>
+                    	<c:if test="${user != null}">
+                    		<button name="log_out" value=""><a class="nav-link">${content.getString("header.log_out")}</a></button>
+                    	</c:if>
+                    	<c:if test="${user == null}">
+                    		<button name="log_out" value="" disabled="disabled"><a class="nav-link">${content.getString("header.log_out")}</a></button>
+                    	</c:if>
+                        
                     </li>
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${content.getString("header.language")}</a>

@@ -49,8 +49,8 @@ public class CommandLogin implements ICommand {
 		currentUser = userDao.findByEmailPassword(request.getParameter(ATRIBUTE_EMAIL),
 					request.getParameter(ATRIBUTE_PASSWORD));
 
-		if (currentUser.getLastName() == null) {
-			page = PageConfigurator.getConfigurator().getPage(PageConfigurator.ERROR_PAGE);
+		if (currentUser == null) {
+			page = PageConfigurator.getConfigurator().getPage(PageConfigurator.LOGIN_PAGE);
 			return page;
 		}
 		

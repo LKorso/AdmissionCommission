@@ -6,15 +6,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger ;
+import org.slf4j.LoggerFactory;
+
 import com.admissioncommission.loader.AdministratorChangeInformationPageLoader;
 import com.admissioncommission.loader.AdministratorPageLoader;
 import com.admissioncommission.loader.IPageLoader;
 import com.admissioncommission.loader.NewAdministratorPageLoader;
+import com.admissioncommission.loader.RejectedApplicationsPageLoader;
 import com.admissioncommission.logic.ApplicationProcessor;
 import com.admissioncommission.logic.ApplicationRecorder;
 import com.admissioncommission.logic.PageConfigurator;
 
 public class CommandAdmin implements ICommand {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CommandAdmin.class); 
 
 	@Override
 	public String render(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,11 +29,17 @@ public class CommandAdmin implements ICommand {
 			return PageConfigurator.getConfigurator().getPage(PageConfigurator.CHANGE_ADMINISTRATOR_INFORMATION_PAGE);
 		} else if(request.getParameter("submit") != null){
 			ApplicationProcessor processor = new ApplicationProcessor();
-			processor.processApplication(request.getParameter("submit"), "Passed");
+			if(processor.canChange(request.getParameter("submit"), "Passed")){
+				processor.processApplication(request.getParameter("submit"), "Passed");
+			} else {
+				LOGGER.info("Can't change this application, it was already reviewed!");
+			}
 			request.setAttribute(ATRIBUTE_REDIRECT, true);
 		} else if(request.getParameter("cancel") != null){
 			ApplicationProcessor processor = new ApplicationProcessor();
-			processor.processApplication(request.getParameter("cancel"), "Rejected");
+			if(processor.canChange(request.getParameter("submit"), "Rejected")){
+				processor.processApplication(request.getParameter("cancel"), "Rejected");
+			}
 			processor.addDescription(Integer.parseInt(request.getParameter("cancel")), request.getParameter("description"));
 			request.setAttribute(ATRIBUTE_REDIRECT, true);
 		} else if (request.getParameter("newAdmininstrator") != null){
@@ -40,6 +51,10 @@ public class CommandAdmin implements ICommand {
 			recorder.enrollStudents();
 			request.setAttribute(ATRIBUTE_REDIRECT, true);
 			return PageConfigurator.getConfigurator().getPage(PageConfigurator.ADMIN_PAGE);
+		} else if (request.getParameter("rejectedApplications") != null){
+			IPageLoader pageLaoder = new RejectedApplicationsPageLoader(request, response);
+			pageLaoder.setAtributes();
+			return PageConfigurator.getConfigurator().getPage(PageConfigurator.REJECTED_APPLICATIONS_PAGE);
 		}
 		IPageLoader pageLoader = new AdministratorPageLoader(request, response);
 		pageLoader.setAtributes();

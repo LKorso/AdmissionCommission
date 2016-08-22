@@ -26,10 +26,10 @@ public class ApplicationProcessor {
 	private IDaoFactory daoFactory;
 	
 	public ApplicationProcessor(HttpServletRequest request){
+		this();
 		this.request = request;
 		session = request.getSession();
 		currentUser = (User) session.getAttribute("user");
-		daoFactory = Factory.createDaoFactory(Factory.MYSQL);
 		currentFaculty = (Faculty) session.getAttribute("faculty");
 	}
 	
@@ -54,6 +54,14 @@ public class ApplicationProcessor {
 		HashMap<String, String> criterions = new HashMap<>();
 		criterions.put("id", applicationId);
 		daoFactory.getApplicationDao().update(changes, criterions);
+	}
+	
+	public boolean canChange(String applicationId, String status){
+		int currentStatusId = daoFactory.getApplicationDao().findbyId(Integer.parseInt(applicationId)).getStatusId();
+		if(daoFactory.getApplicationStatusDao().findByStatus(status).getId() == currentStatusId){
+			return true;
+		}
+		return false;
 	}
 	
 	public void addDescription(int applicationId, String description){

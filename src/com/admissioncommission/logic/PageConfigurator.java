@@ -14,6 +14,7 @@ public class PageConfigurator {
 	public static final String CHANGE_APPLICANT_INFORMATION_PAGE = "CHANGE_APPLICANT_INFORMATION";
 	public static final String CHANGE_ADMINISTRATOR_INFORMATION_PAGE = "CHANGE_ADMINISTRATOR_INFORMATION";
 	public static final String NEW_ADMINISTRATOR_PAGE = "NEW_ADMINISTRATOR";
+	public static final String REJECTED_APPLICATIONS_PAGE = "REJECTED_APPLICATIONS";
 	
 	private static final String RESOURCE_FILE = "com.admissioncommission.logic.pages";
 	private static ResourceBundle resource;

@@ -39,6 +39,14 @@
     <url-pattern>/admin</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>rejectedApplications</servlet-name>
+    <jsp-file>/WEB-INF/jsp/rejectedApplications.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>rejectedApplications</servlet-name>
+    <url-pattern>/rejectedApplications</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>changeAdministratorInformation</servlet-name>
     <jsp-file>/WEB-INF/jsp/changeAdministratorInformation.jsp</jsp-file>
   </servlet>

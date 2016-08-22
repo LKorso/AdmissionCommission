@@ -188,6 +188,19 @@
 				</div>
 			</div>
 			</form>
+			<form action="Controller" method="POST">
+			<input type="hidden" name="command" value="admin"/>
+			<div class="card">
+				<div class="card-block">
+					<div class="row">
+						<h3 class="col-xs-9">${content.getString("admin.rejected_applications.description")}</h3>
+							<button class="col-xs-3 btn" name="rejectedApplications" value="rejectedApplications">
+								${content.getString("show")}
+							</button>
+					</div>
+				</div>
+			</div>
+			</form>
 			<div class="card">
 				<div class="card-block">
 				<div class="row">

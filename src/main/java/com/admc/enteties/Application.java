@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +14,7 @@ import java.sql.Date;
 public class Application implements Serializable{
 
 	private int id;
-	private Date date;
+	private LocalDateTime date;
 	private int applicantId;
 	private int facultyId;
 	private int statusId;

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +16,7 @@ public class User implements Serializable{
 	private int id;
 	private String lastName;
 	private String firstName;
-	private Date dateOfBirth;
+	private LocalDateTime dateOfBirth;
 	private String sex;
 	private String email;
 	private String phone;

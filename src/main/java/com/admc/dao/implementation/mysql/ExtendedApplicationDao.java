@@ -1,13 +1,10 @@
 package com.admc.dao.implementation.mysql;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import com.admc.connection.Connector;
 import com.admc.dao.IExtendedApplicationDao;
 import com.admc.dao.creators.QueryBuilder;
@@ -132,12 +129,12 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 		while(result.next()){
 			currentApplication = new ExtendedApplication();
 			currentApplication.setApplicationId(result.getInt(APPLICATION_ID));
-			currentApplication.setDateOfBirth(result.getDate(DATE_OF_BIRTH));
+			currentApplication.setDateOfBirth(toLocaleDateTime(result.getTimestamp(DATE_OF_BIRTH)));
 			currentApplication.setDescription(result.getString(DESCRIPTION));
 			currentApplication.setEmail(result.getString(EMAIL));
 			currentApplication.setFaculty(result.getString(FACULTY_NAME));
 			currentApplication.setFacultyId(result.getInt(FACULTY_ID));
-			currentApplication.setFillingDate(result.getDate(FILLING_DATE));
+			currentApplication.setFillingDate(toLocaleDateTime((result.getTimestamp(FILLING_DATE))));
 			currentApplication.setFirstName(result.getString(FIRST_NAME));
 			currentApplication.setLastName(result.getString(LAST_NAME));
 			currentApplication.setPhone(result.getString(PHONE));
@@ -152,4 +149,7 @@ public class ExtendedApplicationDao implements IExtendedApplicationDao {
 		return applications;
 	}
 
+	private LocalDateTime toLocaleDateTime(Timestamp date) {
+		return (date == null ? null : date.toLocalDateTime());
+	}
 }

@@ -1,10 +1,7 @@
 package com.admc.dao.implementation.mysql;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +77,7 @@ public class UserDao implements IUserDao {
 				PreparedStatement statement = connection.prepareStatement(getCurrentUserInsertQuery(userType))) {
 				statement.setString(1, newUser.getLastName());
 				statement.setString(2, newUser.getFirstName());
-				statement.setDate(3, newUser.getDateOfBirth());
+				statement.setTimestamp(3, toTimestamp(newUser.getDateOfBirth()));
 				statement.setString(4, newUser.getSex());
 				statement.setString(5, newUser.getEmail());
 				statement.setString(6,  newUser.getPhone());
@@ -200,12 +197,19 @@ public class UserDao implements IUserDao {
 		currentUser.setId(result.getInt(ID));
 		currentUser.setLastName(result.getString(LAST_NAME));
 		currentUser.setFirstName(result.getString(FIRST_NAME));
-		currentUser.setDateOfBirth(result.getDate(DATE_OF_BIRTH));
+		currentUser.setDateOfBirth(toLocaleDateTime(result.getTimestamp(DATE_OF_BIRTH)));
 		currentUser.setEmail(result.getString(EMAIL));
 		currentUser.setPhone(result.getString(PHONE));
 		currentUser.setSex(result.getString(SEX));
 		currentUser.setUserTypeId(result.getInt(USER_TYPE_ID));
 		currentUser.setFacultyId(result.getInt(FACULTY_ID));
 		return currentUser;
+	}
+	private LocalDateTime toLocaleDateTime(Timestamp date) {
+		return (date == null ? null : date.toLocalDateTime());
+	}
+
+	private Timestamp toTimestamp(LocalDateTime date) {
+		return (date == null ? null : Timestamp.valueOf(date));
 	}
 }

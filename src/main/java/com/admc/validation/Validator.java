@@ -1,7 +1,6 @@
 package com.admc.validation;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -64,101 +63,6 @@ public class Validator {
 		} else if (password.length() < MIN_PASSWORD_LENGTH){
 			return false;
 		}
-		return true;
-	}
-	
-	public boolean checkDayInMonth(String day, String month, String year){
-		if(!checkYear(year)){
-			return false;
-		}
-		if(!checkDay(day)){
-			return false;
-		}
-		if(!checkMonth(month)){
-			return false;
-		}
-		
-		int checkedDay = Integer.parseInt(day);
-		int checkedMonth = Integer.parseInt(month);
-		int checkedYear = Integer.parseInt(year);
-		
-		if(checkedMonth == 2 && (checkedYear % 4) == 0 && checkedDay > 29){
-			return false;
-		} else if(checkedMonth == 2 && (checkedYear % 4) != 0 && checkedDay > 28){
-			return false;
-		} else if((checkedMonth == 4 || checkedMonth == 6 || checkedMonth == 9 || checkedMonth == 11) && checkedDay > 30){
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean checkMonth(String month){
-		return (month != null) && (Integer.parseInt(month) <= 12);
-	}
-	
-	public boolean checkYear(String year){
-		return (year != null) && (Integer.parseInt(year) >= MIN_YEAR_VALUE);
-	}
-	
-	public boolean checkDay(String day){
-		if(day != null) {
-			int date = Integer.parseInt(day);
-			return date > 0 && date < 31;
-		}
-		return false;
-	}
-	
-	public boolean checkForMinAge(String day, String month, String year){
-		if(!checkYear(year)){
-			return false;
-		}
-		if(!checkDay(day)){
-			return false;
-		}
-		if(!checkMonth(month)){
-			return false;
-		}
-		
-		int checkedDay = Integer.parseInt(day);
-		int checkedMonth = Integer.parseInt(month);
-		int checkedYear = Integer.parseInt(year);
-		
-		Date date = new Date();
-		int currentDay = Integer.parseInt(new SimpleDateFormat("dd").format(date));
-		int currentMonth = Integer.parseInt(new SimpleDateFormat("MM").format(date));
-		int currentYear = Integer.parseInt(new SimpleDateFormat("yyy").format(date));
-		
-		if((currentYear - checkedYear) > MIN_APPLICANT_AGE){
-			return true;
-		}
-		if((currentYear - checkedYear) == MIN_APPLICANT_AGE && currentMonth > checkedMonth){
-			return true;
-		}
-		if((currentYear - checkedYear) == MIN_APPLICANT_AGE && currentMonth > checkedMonth && currentDay > checkedDay){
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean checkDate(String day, String month, String year){
-		if(!checkYear(year)){
-			return false;
-		}
-		if(!checkDay(day)){
-			return false;
-		}
-		if(!checkMonth(month)){
-			return false;
-		}
-		
-		if(!checkDayInMonth(day, month, year)){
-			return false;
-		}
-		
-		if(!checkForMinAge(day, month, year)){
-			return false;
-		}
-		
 		return true;
 	}
 	

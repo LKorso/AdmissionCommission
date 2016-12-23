@@ -1,9 +1,7 @@
 package com.admc.logic;
 
-import java.sql.Date;
-
+import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
-
 import com.admc.dao.creators.Factory;
 import com.admc.dao.creators.IDaoFactory;
 import com.admc.enteties.ApplicantMark;
@@ -63,16 +61,17 @@ public class UserRegistration {
 		daoFactory.getUserDao().insert(newUser, userType);
 	}
 	
-	private Date getDateOfBirth(){
-		StringBuilder builder = new StringBuilder();
-		
-		builder.append(request.getParameter("year") + "-");
-		builder.append(request.getParameter("month") + "-");
-		builder.append(request.getParameter("day"));
-		
-		return Date.valueOf(builder.toString());
+	private LocalDateTime getDateOfBirth(){
+		final int bYear = getTimePart("year");
+		final int bMonth = getTimePart("month");
+		final int bDay = getTimePart("day");
+		return LocalDateTime.of(bYear, bMonth, bDay, 0, 0);
 	}
-	
+
+	private int getTimePart(String timePartName) {
+		return Integer.parseInt(request.getParameter(timePartName));
+	}
+
 	private void setMarks(){
 		setMark("Certificate", Double.parseDouble(request.getParameter("certificate")));
 		setMark(request.getParameter("subject_one"), Double.parseDouble(request.getParameter("mark_one")));

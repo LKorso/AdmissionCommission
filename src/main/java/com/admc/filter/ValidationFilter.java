@@ -122,13 +122,6 @@ public class ValidationFilter implements Filter {
 	}
 	
 	private boolean checkUserProfileInfomation(HttpServletRequest request, Validator validator, HttpSession session){
-		if(!validator.checkDate(request.getParameter(PARAMETER_DAY), request.getParameter(PARAMETER_MONTH),
-														request.getParameter(PARAMETER_YEAR))
-				|| !validator.checkForInjections(request.getParameter(PARAMETER_DAY))
-				|| !validator.checkForInjections(request.getParameter(PARAMETER_YEAR))) {
-			session.setAttribute(ATRIBUTE_WRONG_DATA, "date");
-			return false;
-		}
 		if(!validator.checkEmail(request.getParameter(PARAMETER_EMAIL))
 				|| !validator.checkForInjections(request.getParameter(PARAMETER_EMAIL))){
 			session.setAttribute(ATRIBUTE_WRONG_DATA, "email");

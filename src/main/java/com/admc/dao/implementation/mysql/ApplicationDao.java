@@ -1,14 +1,10 @@
 package com.admc.dao.implementation.mysql;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import com.admc.connection.Connector;
 import com.admc.dao.IApplicationDao;
 import com.admc.dao.creators.QueryBuilder;
@@ -83,7 +79,7 @@ public class ApplicationDao implements IApplicationDao {
 	public void insert(Application newApplication) {
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(QUERY_FOR_INSERT)) {
-			statement.setDate(1, newApplication.getDate());
+			statement.setTimestamp(1, toTimestamp(newApplication.getDate()));
 			statement.setInt(2, newApplication.getApplicantId());
 			statement.setInt(3, newApplication.getFacultyId());
 			statement.setInt(4, newApplication.getStatusId());
@@ -199,7 +195,7 @@ public class ApplicationDao implements IApplicationDao {
 		Application application = new Application();
 		
 		application.setId(result.getInt(ID));
-		application.setDate(result.getDate(FILLING_DATE));
+		application.setDate(toLocaleDateTime(result.getTimestamp(FILLING_DATE)));
 		application.setApplicantId(result.getInt(APPLICANT_ID));
 		application.setFacultyId(result.getInt(FACULTY_ID));
 		application.setStatusId(result.getInt(STATUS_ID));
@@ -227,5 +223,13 @@ public class ApplicationDao implements IApplicationDao {
 		builder.addChanges(field, newValue);
 		builder.addNotEqual(field, criterion);
 		return builder.toString();
+	}
+
+	private LocalDateTime toLocaleDateTime(Timestamp date) {
+		return (date == null ? null : date.toLocalDateTime());
+	}
+
+	private Timestamp toTimestamp(LocalDateTime date) {
+		return (date == null ? null : Timestamp.valueOf(date));
 	}
 }

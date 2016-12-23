@@ -3,6 +3,8 @@ package com.admc.logic;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +78,7 @@ public class ApplicationProcessor {
 	public void addApplication(){
 		Application newApplication = new Application();
 		newApplication.setApplicantId(currentUser.getId());
-		newApplication.setDate(Date.valueOf(getCurrentDate()));
+		newApplication.setDate(LocalDateTime.now(ZoneId.systemDefault()));
 		newApplication.setFacultyId(currentFaculty.getId());
 		newApplication.setStatusId(daoFactory.getApplicationStatusDao().findByStatus("Unreviewed").getId());
 		newApplication.setPriorityId(Integer.parseInt(request.getParameter("priority_id")));
@@ -101,16 +103,8 @@ public class ApplicationProcessor {
 	
 	private Map<String, String> createCriterions(){
 		Map<String, String> criterions = new HashMap<>();
-		
 		criterions.put("applicant_id", Integer.toString(currentUser.getId()));
 		criterions.put("faculty_id", Integer.toString(currentFaculty.getId()));
-		
 		return criterions;
-	}
-	
-	private String getCurrentDate(){
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		java.util.Date date = new java.util.Date();
-		return dateFormat.format(date);
 	}
 }

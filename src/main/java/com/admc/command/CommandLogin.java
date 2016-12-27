@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.admc.dao.IUserDao;
-import com.admc.dao.IUserTypeDao;
 import com.admc.dao.creators.Factory;
 import com.admc.dao.creators.IDaoFactory;
 import com.admc.enteties.User;
@@ -21,7 +20,6 @@ import com.admc.logic.PageConfigurator;
 public class CommandLogin implements ICommand {
 	private IDaoFactory daoFactory = Factory.createDaoFactory(Factory.MYSQL);
 	private IUserDao userDao = daoFactory.getUserDao();
-	private IUserTypeDao userTypeDao = daoFactory.getUserTypeDao();
 	private User currentUser;
 
 	private static final String ATRIBUTE_EMAIL = "email";
@@ -56,30 +54,24 @@ public class CommandLogin implements ICommand {
 		
 		request.getSession().setAttribute(ATRIBUTE_USER, currentUser);
 		request.setAttribute(ATTRIBUTE_REDIRECT, true);
-		
-		switch (identifyUser(currentUser)) {
-		case USER_TYPE_ADMINISTRATOR:
+
+		User.UserRole currentRole = currentUser.getRole();
+		System.out.println(currentRole);
+
+		if (currentRole.equals(User.UserRole.ADMIN)) {
 			renderAdminPage(request, response);
 			request.getSession().setAttribute(ATRIBUTE_USER_TYPE, USER_TYPE_ADMINISTRATOR);
-			break;
-		case USER_TYPE_APPLICANT:
+		} else if (currentRole.equals(User.UserRole.APPLICANT)) {
 			renderApplicantPage(request, response);
 			request.getSession().setAttribute(ATRIBUTE_USER_TYPE, USER_TYPE_APPLICANT);
-			break;
-		case USER_TYPE_STUDENT:
+		} else if (currentRole.equals(User.UserRole.STUDENT)) {
 			renderStudentPage(request, response);
 			request.getSession().setAttribute(ATRIBUTE_USER_TYPE, USER_TYPE_STUDENT);
-			break;
-		default:
+		} else {
 			page = PageConfigurator.getConfigurator().getPage(PageConfigurator.ERROR_PAGE);
-			break;
 		}
 		
 		return page;
-	}
-
-	private String identifyUser(User currentUser) {
-		return userTypeDao.findById(currentUser.getUserTypeId()).getType();
 	}
 
 	private void renderAdminPage(HttpServletRequest request, HttpServletResponse response) {

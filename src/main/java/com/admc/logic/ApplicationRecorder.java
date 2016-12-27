@@ -11,6 +11,7 @@ import com.admc.dao.creators.QueryBuilder;
 import com.admc.enteties.ExtendedApplication;
 import com.admc.enteties.Faculty;
 import com.admc.enteties.Priority;
+import com.admc.enteties.User;
 
 public class ApplicationRecorder {
 	private List<List<ExtendedApplication>> applicationsByFaculties;
@@ -105,9 +106,8 @@ public class ApplicationRecorder {
 		IUserDao userDao = daoFactory.getUserDao();
 		HashMap<String, String> changes = new HashMap<>();
 		HashMap<String, String> criterions = new HashMap<>();
-		int sudentTypeId = daoFactory.getUserTypeDao().findByType("Student").getId();
 		for(Integer studentId : students.keySet()){
-			changes.put("user_type_id", Integer.toString(sudentTypeId));
+			changes.put("role", User.UserRole.STUDENT.toString());
 			changes.put("faculty_id", Integer.toString(students.get(studentId)));
 			criterions.put("id", studentId.toString());
 			userDao.update(changes, criterions);

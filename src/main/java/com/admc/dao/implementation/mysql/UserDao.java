@@ -20,17 +20,14 @@ public class UserDao implements IUserDao {
 	private static final String SEX = "sex";
 	private static final String EMAIL = "email";
 	private static final String PHONE = "phone";
-	private static final String USER_TYPE_ID = "user_type_id";
 	private static final String PASSWORD = "password"; 
 	private static final String FACULTY_ID = "faculty_id";
+	private static final String USER_ROLE = "role";
 	private static final String TABLE_NAME = "user";
-	private static final String USER_TYPE_ADMINISTRATOR = "Administrator";
-	private static final String USER_TYPE_APPLICANT = "Applicant";
-	private static final String USER_TYPE_STUDENT = "Student";
 	private static final String QUERY_FOR_DELETE = "DELETE FROM user WHERE id = ?";
 	private static final String QUERY_FOR_SELECT_ALL = "SELECT * FROM user";
-	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM user WHERE id = ";
 
+	private static final String QUERY_FOR_FIND_BY_ID = "SELECT * FROM user WHERE id = ";
 	private static final Logger LOGGER = LogManager.getLogger(UserDao.class);
 
 	@Override
@@ -58,7 +55,28 @@ public class UserDao implements IUserDao {
 			LOGGER.error("Error updating mark", exception);
 		}
 	}
-	
+
+	@Override
+	public void insert(User newUser) {
+		try(Connection connection = Connector.getConnection();
+			PreparedStatement statement = connection.prepareStatement(getCurrentUserInsertQuery(newUser.getRole()))) {
+			statement.setString(1, newUser.getLastName());
+			statement.setString(2, newUser.getFirstName());
+			statement.setTimestamp(3, toTimestamp(newUser.getDateOfBirth()));
+			statement.setString(4, newUser.getSex());
+			statement.setString(5, newUser.getEmail());
+			statement.setString(6,  newUser.getPhone());
+			statement.setString(7, newUser.getRole().toString());
+			statement.setString(8, newUser.getPassword());
+			if(newUser.getRole().equals(User.UserRole.STUDENT)){
+				statement.setInt(9, newUser.getFacultyId());
+			}
+			statement.executeUpdate();
+		} catch(SQLException exception){
+			LOGGER.error("Error inserting into table ", exception);
+		}
+	}
+
 	public void update(String newValue, int id, String fieldName) {
 		try(Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(getUpdateQuery(fieldName));) {
@@ -69,27 +87,6 @@ public class UserDao implements IUserDao {
 		} catch(SQLException exception) {
 			LOGGER.error("Error updating mark", exception);
 		}
-	}
-
-	@Override
-	public void insert(User newUser, String userType) {
-		try(Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(getCurrentUserInsertQuery(userType))) {
-				statement.setString(1, newUser.getLastName());
-				statement.setString(2, newUser.getFirstName());
-				statement.setTimestamp(3, toTimestamp(newUser.getDateOfBirth()));
-				statement.setString(4, newUser.getSex());
-				statement.setString(5, newUser.getEmail());
-				statement.setString(6,  newUser.getPhone());
-				statement.setInt(7, newUser.getUserTypeId());
-				statement.setString(8, newUser.getPassword());
-				if(userType.equals(USER_TYPE_STUDENT)){
-					statement.setInt(9, newUser.getFacultyId());
-				}
-				statement.executeUpdate();
-			} catch(SQLException exception){
-				LOGGER.error("Error inserting into table ", exception);
-			}
 	}
 
 	@Override
@@ -107,12 +104,12 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
-	public List<User> selectSpecificUsers(String userType) {
+	public List<User> selectSpecificUsers(User.UserRole role) {
 		List<User> users = new ArrayList<>();
 		
 		try(Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet result = statement.executeQuery(getSelectSpecificUserQuery(userType))) {
+				ResultSet result = statement.executeQuery(getSelectSpecificUserQuery(role))) {
 			users.add(setUser(result));
 		} catch(SQLException exception){
 			LOGGER.error("Error selecting specific user", exception);
@@ -161,19 +158,18 @@ public class UserDao implements IUserDao {
 		return queryBuilder.toString();
 	}
 	
-	private String getSelectSpecificUserQuery(String userType){
-		StringBuilder queryBuilder = new StringBuilder("SELECT * FROM user WHERE user_type_id = ");
-		UserTypeDao userTypeDao = new UserTypeDao();
-		queryBuilder.append(userTypeDao.findByType(userType).getId());
+	private String getSelectSpecificUserQuery(User.UserRole role){
+		StringBuilder queryBuilder = new StringBuilder("SELECT * FROM user WHERE role = ");
+		queryBuilder.append(role);
 		
 		return queryBuilder.toString();
 	}
 	
- 	private String getCurrentUserInsertQuery(String userType){
+ 	private String getCurrentUserInsertQuery(User.UserRole role){
 		StringBuilder queryBuilder = new StringBuilder("INSERT INTO user(last_name, first_name, date_of_birth, sex, email, phone,"
-												+ "user_type_id, password");
+												+ "role, password");
 		
-		if(userType.equals(USER_TYPE_STUDENT)){
+		if(role.equals(User.UserRole.STUDENT)){
 			queryBuilder.append(", faculty_id) VALUES(?,?,?,?,?,?,?,?,?)");
 		} else {
 			queryBuilder.append(") VALUES(?,?,?,?,?,?,?,?)");
@@ -201,15 +197,27 @@ public class UserDao implements IUserDao {
 		currentUser.setEmail(result.getString(EMAIL));
 		currentUser.setPhone(result.getString(PHONE));
 		currentUser.setSex(result.getString(SEX));
-		currentUser.setUserTypeId(result.getInt(USER_TYPE_ID));
+		currentUser.setRole(createUserRole(result.getString(USER_ROLE)));
 		currentUser.setFacultyId(result.getInt(FACULTY_ID));
 		return currentUser;
 	}
+
 	private LocalDateTime toLocaleDateTime(Timestamp date) {
 		return (date == null ? null : date.toLocalDateTime());
 	}
 
 	private Timestamp toTimestamp(LocalDateTime date) {
 		return (date == null ? null : Timestamp.valueOf(date));
+	}
+
+	private User.UserRole createUserRole(String roleName) {
+		User.UserRole currentRole = null;
+ 		for (User.UserRole role : User.UserRole.values()) {
+			if (role.toString().equals(roleName)) {
+				currentRole = role;
+				break;
+			}
+		}
+		return currentRole;
 	}
 }

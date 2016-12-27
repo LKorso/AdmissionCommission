@@ -8,9 +8,9 @@ import com.admc.enteties.User;
 public interface IUserDao {
 	void delete(int id);
 	void update(HashMap<String, String> changes, HashMap<String, String> criterions);
-	void insert(User newUser, String userType);
+	void insert(User newUser);
 	List<User> selectAll();
-	List<User> selectSpecificUsers(String userType);
+	List<User> selectSpecificUsers(User.UserRole role);
 	User findById(int id);
 	User findByEmailPassword(String email, String password);
 }

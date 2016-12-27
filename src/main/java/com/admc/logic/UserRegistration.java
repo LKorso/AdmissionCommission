@@ -9,7 +9,6 @@ import com.admc.enteties.User;
 
 public class UserRegistration {
 	private HttpServletRequest request;
-	private User newUser;
 	private IDaoFactory daoFactory;
 	
 	private static final String PARAMETER_FIRST_NAME = "firstName";
@@ -38,27 +37,27 @@ public class UserRegistration {
 	}
 	
 	private void registerAdministrator(){
-		createUser("Administrator");
+		createUser(User.UserRole.ADMIN);
 	}
 	
 	private void registerAplicant(){
-		createUser("Applicant");
+		createUser(User.UserRole.APPLICANT);
 		setMarks();
 	}
 	
-	private void createUser(String userType){
-		newUser = new User();
+	private void createUser(User.UserRole role){
+		User newUser = new User();
 		
 		newUser.setFirstName(request.getParameter(PARAMETER_FIRST_NAME));
 		newUser.setLastName(request.getParameter(PARAMETER_LAST_NAME));
 		newUser.setEmail(request.getParameter(PARAMETER_EMAIL));
 		newUser.setPhone(request.getParameter(PARAMETER_PHONE));
 		newUser.setSex(request.getParameter(PARAMETER_SEX));
-		newUser.setUserTypeId(daoFactory.getUserTypeDao().findByType(userType).getId());
+		newUser.setRole(role);
 		newUser.setDateOfBirth(getDateOfBirth());
 		newUser.setPassword(request.getParameter(PARAMETER_PASSWORD));
 		
-		daoFactory.getUserDao().insert(newUser, userType);
+		daoFactory.getUserDao().insert(newUser);
 	}
 	
 	private LocalDateTime getDateOfBirth(){

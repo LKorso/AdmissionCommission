@@ -14,6 +14,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 public class FacultyDao implements IFacultyDao {
+
 	private static final String QUERY_FOR_DELETE = "DELETE FROM faculty WHERE id = ?";
 	private static final String QUERY_FOR_UPDATE = "UPDATE faculty SET name = ? WHERE id = ?";
 	private static final String QUERY_FOR_INSERT = "INSERT INTO faculty(name, students_number, short_name) VALUES (?,?,?)";
@@ -78,17 +79,17 @@ public class FacultyDao implements IFacultyDao {
 	@Override
 	public Faculty findById(int id) {
 		Faculty currentFaculty = null;
-		
-		try(Connection connection = Connector.getConnection();
+		try(
+				Connection connection = Connector.getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_ID + id)) {
+				ResultSet result = statement.executeQuery(QUERY_FOR_FIND_BY_ID + id)
+			) {
 			while(result.next()){
 				currentFaculty = setFaculty(result);
 			}
 		} catch (SQLException exception) {
 			LOGGER.error("Error selecting from table by id", exception);
 		}
-		
 		return currentFaculty;
 	}
 

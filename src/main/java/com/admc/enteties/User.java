@@ -20,7 +20,11 @@ public class User implements Serializable{
 	private String sex;
 	private String email;
 	private String phone;
-	private int userTypeId;
+	private UserRole role;
 	private String password;
 	private int facultyId;
+
+	public enum UserRole {
+		ADMIN, APPLICANT, STUDENT
+	}
 }

@@ -47,11 +47,6 @@ public class MySqlDaoFactory implements IDaoFactory {
 	public IUserDao getUserDao() {
 		return new UserDao();
 	}
-
-	@Override
-	public IUserTypeDao getUserTypeDao() {
-		return new UserTypeDao();
-	}
 	
 	@Override
 	public IExtendedApplicationDao getExtendedApplicationDao(){
